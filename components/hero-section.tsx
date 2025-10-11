@@ -48,7 +48,7 @@ export function HeroSection() {
       rotateX: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut",
+        ease: "easeOut" as const,
       },
     },
   };
@@ -109,168 +109,194 @@ export function HeroSection() {
       <div className="relative z-10 h-full flex items-center">
         <div className="container mx-auto px-4">
           <div className="flex items-center h-full">
-            {/* Organic White Text Container - Left Positioned */}
+            {/* Content - Modern, Sleek Design (No White Background) */}
             <motion.div
-              className="relative"
-              initial={{ opacity: 0, x: -100, scale: 0.8 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
+              className="relative max-w-3xl"
+              initial={{ opacity: 0, x: -100 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.2, ease: "easeOut" }}
             >
-              {/* Organic Shape Background */}
-              <motion.div
-                className="relative bg-white/70 backdrop-blur-sm p-8 md:p-12 max-w-2xl shadow-2xl"
-                style={{
-                  clipPath: "polygon(0% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 15%)",
-                  borderRadius: "60% 40% 70% 30% / 40% 60% 30% 70%"
-                }}
-                animate={{
-                  borderRadius: [
-                    "60% 40% 70% 30% / 40% 60% 30% 70%",
-                    "40% 60% 30% 70% / 60% 40% 70% 30%",
-                    "70% 30% 60% 40% / 30% 70% 40% 60%",
-                    "60% 40% 70% 30% / 40% 60% 30% 70%"
-                  ]
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                whileHover={{
-                  scale: 1.02,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                {/* Floating particles inside the container */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                  {[...Array(6)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute w-2 h-2 bg-red-300/30 rounded-full"
-                      style={{
-                        left: `${20 + i * 15}%`,
-                        top: `${30 + i * 10}%`,
-                      }}
-                      animate={{
-                        y: [0, -20, 0],
-                        opacity: [0.3, 0.8, 0.3],
-                        scale: [1, 1.5, 1],
-                      }}
-                      transition={{
-                        duration: 3 + i * 0.5,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: i * 0.3,
-                      }}
-                    />
-                  ))}
-                </div>
-
-                {/* Content */}
-                <div className="relative z-10 text-center space-y-4">
-                  {/* Small tag */}
+              {/* Content - Modern, Sleek Redesign */}
+              <div className="relative z-10 space-y-6 md:space-y-8">
+                  {/* Elegant Badge */}
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                  >
-                    <span className="text-gray-500 text-sm font-medium">École spécialisée</span>
-                  </motion.div>
-
-                  {/* Main Text Content */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                  >
-                    <span className="text-gray-600 text-lg md:text-xl">Nous aidons à</span>
-                  </motion.div>
-
-                  <motion.h1
-                    className="text-4xl md:text-6xl lg:text-7xl font-bold"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.8, delay: 0.6, type: "spring", stiffness: 100 }}
+                    transition={{ duration: 0.6, delay: 0.2, type: "spring" }}
+                    className="inline-block"
                   >
-                    <motion.span
-                      className="bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent"
-                      initial={{ backgroundPosition: "0% 50%" }}
-                      animate={isInView ? { backgroundPosition: "100% 50%" } : {}}
-                      transition={{ duration: 2, delay: 1 }}
-                    >
-                      Grand Cœur
-                    </motion.span>
-                  </motion.h1>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.8, delay: 0.8 }}
-                  >
-                    <span className="text-gray-600 text-lg md:text-xl">Vos enfants</span>
+                    <div className="relative group">
+                      <motion.div
+                        className="px-4 py-2 bg-gradient-to-r from-red-50 to-pink-50 rounded-full border border-red-200/50 shadow-sm"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <div className="flex items-center gap-2">
+                          <motion.div
+                            animate={{ rotate: [0, 10, -10, 0] }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                          >
+                            <Sparkles className="w-4 h-4 text-red-500" />
+                          </motion.div>
+                          <span className="text-sm md:text-base font-semibold bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent">
+                            École spécialisée
+                          </span>
+                        </div>
+                      </motion.div>
+                      {/* Glow effect */}
+                      <motion.div
+                        className="absolute inset-0 bg-red-400/20 rounded-full blur-xl -z-10"
+                        animate={{ opacity: [0.3, 0.6, 0.3] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                    </div>
                   </motion.div>
 
+                  {/* Modern Title Layout */}
+                  <div className="space-y-3">
+                    {/* Main Hero Title - Grand Cœur */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ 
+                        duration: 1, 
+                        delay: 0.4, 
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 15
+                      }}
+                      className="relative"
+                    >
+                      <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-none">
+                        <motion.span
+                          className="inline-block bg-gradient-to-br from-red-600 via-red-700 to-red-900 bg-clip-text text-transparent"
+                          style={{
+                            textShadow: '0 0 40px rgba(220, 38, 38, 0.3)',
+                            letterSpacing: '-0.03em'
+                          }}
+                          whileHover={{ scale: 1.02 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          Grand Cœur
+                        </motion.span>
+                      </h1>
+                      {/* Decorative underline */}
+                      <motion.div
+                        className="h-1.5 bg-gradient-to-r from-red-500 via-red-600 to-transparent rounded-full mt-2"
+                        initial={{ width: 0 }}
+                        animate={isInView ? { width: "70%" } : {}}
+                        transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
+                      />
+                    </motion.div>
+                  </div>
+
+                  {/* Elegant Divider */}
+                  <motion.div
+                    className="flex items-center gap-3 py-2"
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ duration: 0.6, delay: 1.0 }}
+                  >
+                    <motion.div
+                      className="w-12 h-[2px] bg-gradient-to-r from-transparent via-red-400 to-red-600 rounded-full"
+                      initial={{ scaleX: 0 }}
+                      animate={isInView ? { scaleX: 1 } : {}}
+                      transition={{ duration: 0.8, delay: 1.1 }}
+                    />
+                    <Heart className="w-5 h-5 text-red-500 fill-red-500" />
+                    <motion.div
+                      className="w-12 h-[2px] bg-gradient-to-r from-red-600 via-red-400 to-transparent rounded-full"
+                      initial={{ scaleX: 0 }}
+                      animate={isInView ? { scaleX: 1 } : {}}
+                      transition={{ duration: 0.8, delay: 1.1 }}
+                    />
+                  </motion.div>
+
+                  {/* Feature Messages - Modern Cards */}
+                  <div className="space-y-4 pt-2">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.6, delay: 1.2 }}
+                      className="relative group"
+                    >
+                      <div className="flex items-start gap-3 p-4 bg-white/60 backdrop-blur-sm rounded-2xl border border-red-100/50 shadow-sm hover:shadow-md transition-all">
+                        <motion.div
+                          animate={{ rotate: [0, 360] }}
+                          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        >
+                          <Star className="w-5 h-5 text-red-500 fill-red-500 flex-shrink-0 mt-0.5" />
+                        </motion.div>
+                        <p className="text-base md:text-lg lg:text-xl font-medium text-gray-800 leading-relaxed">
+                          Une école où chaque enfant brille à sa manière
+                        </p>
+                      </div>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.6, delay: 1.4 }}
+                      className="relative group"
+                    >
+                      <div className="flex items-start gap-3 p-4 bg-white/60 backdrop-blur-sm rounded-2xl border border-red-100/50 shadow-sm hover:shadow-md transition-all">
+                        <motion.div
+                          animate={{ scale: [1, 1.2, 1] }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                        >
+                          <Heart className="w-5 h-5 text-red-500 fill-red-500 flex-shrink-0 mt-0.5" />
+                        </motion.div>
+                        <p className="text-base md:text-lg lg:text-xl font-medium text-gray-700 leading-relaxed">
+                          L'école spécialisée qui croit en chaque talent
+                        </p>
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  {/* CTA Button - Premium Design */}
                   <motion.div
                     className="pt-4"
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.8, delay: 1.0 }}
-                  >
-                    <AnimatedText
-                      text="Une école où chaque enfant brille à sa manière"
-                      className="text-gray-700 text-lg md:text-xl leading-relaxed"
-                    />
-                  </motion.div>
-
-                  <motion.div
-                    className="pt-2"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.8, delay: 1.2 }}
-                  >
-                    <AnimatedText
-                      text="Un lieu d'amour, d'apprentissage et de confiance"
-                      className="text-gray-600 text-base md:text-lg"
-                    />
-                  </motion.div>
-
-                  {/* CTA Button */}
-                  <motion.div
-                    className="pt-6"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.8, delay: 1.4 }}
+                    transition={{ duration: 0.6, delay: 1.6 }}
                   >
                     <motion.a
                       href="#about"
                       onClick={(e) => handleSmoothScroll(e, "about")}
-                      className="inline-block px-8 py-4 bg-gradient-to-r from-red-500 to-red-700 text-white text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transition-all"
-                      whileHover={{ scale: 1.05, y: -3 }}
+                      className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-red-600 via-red-700 to-red-800 text-white text-base md:text-lg font-bold rounded-full shadow-[0_8px_30px_rgba(220,38,38,0.4)] overflow-hidden"
+                      whileHover={{ 
+                        scale: 1.05,
+                        boxShadow: "0 12px 40px rgba(220, 38, 38, 0.5)"
+                      }}
                       whileTap={{ scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
                     >
-                      Découvrir notre mission
+                      {/* Shimmer effect */}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
+                        initial={{ x: "-200%" }}
+                        whileHover={{ x: "200%" }}
+                        transition={{ duration: 0.8 }}
+                      />
+                      <span className="relative z-10">Découvrir notre mission</span>
+                      <motion.svg
+                        className="relative z-10 w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        animate={{ x: [0, 5, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 7l5 5m0 0l-5 5m5-5H6"
+                        />
+                      </motion.svg>
                     </motion.a>
                   </motion.div>
                 </div>
-              </motion.div>
-
-              {/* Organic glow effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-red-200/20 to-red-300/20 blur-2xl -z-10"
-                style={{
-                  clipPath: "polygon(0% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 15%)",
-                  borderRadius: "60% 40% 70% 30% / 40% 60% 30% 70%"
-                }}
-                animate={{
-                  scale: [1, 1.1, 1],
-                  opacity: [0.3, 0.6, 0.3],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
             </motion.div>
           </div>
         </div>
