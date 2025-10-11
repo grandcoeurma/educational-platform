@@ -179,66 +179,301 @@ export function AboutSection() {
 
         {/* Main Content - Modern Grid Layout */}
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
-          {/* Text Content - Now First for Better Flow */}
+          {/* Text Content - Enhanced with Vector Strokes */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="space-y-8"
+            className="space-y-8 relative"
           >
-            {/* Main Description Card */}
+            {/* Decorative Vector Strokes Around Text */}
+            {/* Top Left Curved Stroke */}
+            <motion.svg
+              className="absolute -top-12 -left-8 w-32 h-32 pointer-events-none"
+              viewBox="0 0 120 120"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.8 }}
+              transition={{ duration: 2, delay: 0.5 }}
+            >
+              <motion.path
+                d="M 10,60 Q 30,20 60,30 T 110,50"
+                stroke="url(#textStroke1)"
+                strokeWidth="4"
+                fill="none"
+                strokeLinecap="round"
+                animate={{
+                  d: [
+                    "M 10,60 Q 30,20 60,30 T 110,50",
+                    "M 10,60 Q 30,35 60,30 T 110,50",
+                    "M 10,60 Q 30,20 60,30 T 110,50"
+                  ]
+                }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <defs>
+                <linearGradient id="textStroke1" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#ef4444" />
+                  <stop offset="100%" stopColor="#f97316" />
+                </linearGradient>
+              </defs>
+            </motion.svg>
+
+            {/* Right Side Playful Stroke */}
+            <motion.svg
+              className="absolute -top-6 -right-12 w-40 h-40 pointer-events-none"
+              viewBox="0 0 160 160"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.7 }}
+              transition={{ duration: 2, delay: 0.7 }}
+            >
+              <motion.path
+                d="M 20,80 Q 60,40 80,80 T 140,100"
+                stroke="url(#textStroke2)"
+                strokeWidth="5"
+                fill="none"
+                strokeLinecap="round"
+                animate={{
+                  d: [
+                    "M 20,80 Q 60,40 80,80 T 140,100",
+                    "M 20,80 Q 60,55 80,80 T 140,100",
+                    "M 20,80 Q 60,40 80,80 T 140,100"
+                  ]
+                }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <defs>
+                <linearGradient id="textStroke2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#f43f5e" />
+                  <stop offset="100%" stopColor="#dc2626" />
+                </linearGradient>
+              </defs>
+            </motion.svg>
+
+            {/* Bottom Wavy Stroke */}
+            <motion.svg
+              className="absolute -bottom-8 left-1/4 w-48 h-24 pointer-events-none"
+              viewBox="0 0 200 100"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.6 }}
+              transition={{ duration: 2, delay: 1 }}
+            >
+              <motion.path
+                d="M 10,50 Q 50,30 100,50 T 190,50"
+                stroke="url(#textStroke3)"
+                strokeWidth="4"
+                fill="none"
+                strokeLinecap="round"
+                animate={{
+                  d: [
+                    "M 10,50 Q 50,30 100,50 T 190,50",
+                    "M 10,50 Q 50,65 100,50 T 190,50",
+                    "M 10,50 Q 50,30 100,50 T 190,50"
+                  ]
+                }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <defs>
+                <linearGradient id="textStroke3" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#fb923c" />
+                  <stop offset="100%" stopColor="#f43f5e" />
+                </linearGradient>
+              </defs>
+            </motion.svg>
+
+            {/* Floating Sparkles */}
+            {[
+              { left: "-10px", top: "30%", delay: 0 },
+              { right: "-5px", top: "50%", delay: 1 },
+              { left: "20%", bottom: "20%", delay: 2 },
+            ].map((pos, i) => (
+              <motion.div
+                key={i}
+                className="absolute pointer-events-none"
+                style={{ ...pos }}
+                animate={{
+                  scale: [1, 1.5, 1],
+                  rotate: [0, 180, 360],
+                  opacity: [0.4, 0.8, 0.4],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: pos.delay,
+                }}
+              >
+                <Sparkles className="w-5 h-5 text-red-400" />
+              </motion.div>
+            ))}
+
+            {/* Enhanced Main Description Card */}
             <motion.div
-              className="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-lg border border-red-100/50"
+              className="bg-gradient-to-br from-white via-red-50/30 to-white backdrop-blur-sm p-10 rounded-[32px] shadow-2xl border-2 border-red-100 relative overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.6 }}
+              whileHover={{ 
+                boxShadow: "0 25px 50px rgba(239, 68, 68, 0.15)",
+                y: -5 
+              }}
             >
-              <div className="space-y-6">
-                <div className="text-xl md:text-2xl font-bold text-gray-900 leading-relaxed">
-                  <AnimatedText 
-                    text="Grand Cœur est un centre spécialisé dédié aux enfants porteurs de troubles du spectre autistique (TSA) et de trisomie 21."
-                    className=""
+              {/* Decorative Corner Elements */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-100/50 to-transparent rounded-bl-[100px]" />
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-orange-100/40 to-transparent rounded-tr-[80px]" />
+              
+              <div className="space-y-6 relative z-10">
+                {/* Intro Badge */}
+                <motion.div
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-orange-500 rounded-full shadow-lg"
+                  initial={{ scale: 0 }}
+                  animate={isInView ? { scale: 1 } : {}}
+                  transition={{ duration: 0.5, delay: 0.7, type: "spring" }}
+                >
+                  <Heart className="w-4 h-4 text-white fill-white" />
+                  <span className="text-sm font-bold text-white">Notre Mission</span>
+                </motion.div>
+
+                {/* Enhanced Headline */}
+                <div className="space-y-4">
+                  <h3 className="text-2xl md:text-3xl font-black text-gray-900 leading-tight">
+                    <AnimatedText 
+                      text="Un centre d'excellence pour l'épanouissement de chaque enfant"
+                      className=""
+                    />
+                  </h3>
+                  
+                  <motion.div 
+                    className="h-1.5 w-24 bg-gradient-to-r from-red-500 via-orange-500 to-red-600 rounded-full shadow-md"
+                    initial={{ width: 0 }}
+                    animate={isInView ? { width: 96 } : {}}
+                    transition={{ duration: 1, delay: 1 }}
                   />
                 </div>
-                <div className="h-1 w-20 bg-gradient-to-r from-red-500 to-red-700 rounded-full" />
-                <AnimatedText 
-                  text="Fondé avec amour et passion, notre mission est d'offrir à chaque enfant un cadre éducatif adapté, bienveillant et stimulant, répondant à ses besoins spécifiques."
-                  className="text-lg md:text-xl text-gray-700 leading-relaxed"
-                />
+
+                {/* Rich Description */}
+                <div className="space-y-4">
+                  <p className="text-lg md:text-xl text-gray-800 leading-relaxed font-medium">
+                    <AnimatedText 
+                      text="Grand Cœur est un centre spécialisé dédié aux enfants porteurs de troubles du spectre autistique (TSA) et de trisomie 21."
+                      className=""
+                    />
+                  </p>
+                  
+                  <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+                    <AnimatedText 
+                      text="Fondé avec amour et passion, notre mission est d'offrir à chaque enfant un cadre éducatif adapté, bienveillant et stimulant, répondant à ses besoins spécifiques pour favoriser son développement et son autonomie."
+                      className=""
+                    />
+                  </p>
+
+                  {/* Key Points */}
+                  <motion.div 
+                    className="grid gap-3 mt-6"
+                    initial={{ opacity: 0 }}
+                    animate={isInView ? { opacity: 1 } : {}}
+                    transition={{ delay: 1.2 }}
+                  >
+                    {[
+                      { icon: Target, text: "Approche personnalisée et bienveillante" },
+                      { icon: Users, text: "Équipe pluridisciplinaire expérimentée" },
+                      { icon: Sparkles, text: "Environnement sécurisé et stimulant" }
+                    ].map((item, idx) => (
+                      <motion.div
+                        key={idx}
+                        className="flex items-center gap-3 p-3 bg-white/60 rounded-2xl border border-red-100/50"
+                        initial={{ x: -20, opacity: 0 }}
+                        animate={isInView ? { x: 0, opacity: 1 } : {}}
+                        transition={{ delay: 1.3 + idx * 0.1 }}
+                        whileHover={{ x: 5, backgroundColor: "rgba(254, 242, 242, 0.8)" }}
+                      >
+                        <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
+                          <item.icon className="w-5 h-5 text-white" />
+                        </div>
+                        <span className="text-sm md:text-base font-semibold text-gray-800">{item.text}</span>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </div>
               </div>
+
+              {/* Animated Glow Effect */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-orange-500/5 rounded-[32px]"
+                animate={{
+                  opacity: [0.3, 0.6, 0.3],
+                }}
+                transition={{ duration: 4, repeat: Infinity }}
+              />
             </motion.div>
 
-            {/* Stats Cards */}
+            {/* Enhanced Stats Cards */}
             <div className="grid grid-cols-2 gap-4">
               <motion.div
-                className="bg-gradient-to-br from-red-500 to-red-700 p-6 rounded-2xl shadow-lg text-white"
+                className="relative bg-gradient-to-br from-red-500 via-red-600 to-red-700 p-6 rounded-3xl shadow-2xl text-white overflow-hidden"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.6, delay: 0.8 }}
-                whileHover={{ scale: 1.05, y: -5 }}
+                whileHover={{ scale: 1.05, y: -8, boxShadow: "0 30px 60px rgba(239, 68, 68, 0.4)" }}
               >
+                {/* Animated Background Pattern */}
                 <motion.div
-                  className="text-4xl font-black mb-2"
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  10+
-                </motion.div>
-                <div className="text-sm font-medium opacity-90">Ans d'expérience</div>
+                  className="absolute inset-0 opacity-20"
+                  animate={{
+                    backgroundPosition: ["0% 0%", "100% 100%"],
+                  }}
+                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                  style={{
+                    backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
+                    backgroundSize: "20px 20px",
+                  }}
+                />
+                
+                <div className="relative z-10">
+                  <motion.div
+                    className="text-5xl font-black mb-2"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    10+
+                  </motion.div>
+                  <div className="text-sm font-bold opacity-95">Ans d'expérience</div>
+                  <div className="text-xs mt-1 opacity-80">dans l'accompagnement spécialisé</div>
+                </div>
+                
+                {/* Corner Accent */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-bl-[60px]" />
               </motion.div>
               
               <motion.div
-                className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-red-100"
+                className="relative bg-gradient-to-br from-white to-red-50 backdrop-blur-sm p-6 rounded-3xl shadow-2xl border-2 border-red-200 overflow-hidden"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.6, delay: 0.9 }}
-                whileHover={{ scale: 1.05, y: -5 }}
+                whileHover={{ scale: 1.05, y: -8, boxShadow: "0 30px 60px rgba(239, 68, 68, 0.2)" }}
               >
-                <div className="flex items-center gap-2 mb-2">
-                  <Award className="w-6 h-6 text-red-600" />
-                  <div className="text-3xl font-black text-gray-900">100%</div>
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <motion.div
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    >
+                      <Award className="w-8 h-8 text-red-600" />
+                    </motion.div>
+                    <div className="text-4xl font-black text-gray-900">100%</div>
+                  </div>
+                  <div className="text-sm font-bold text-gray-800">Dévouement</div>
+                  <div className="text-xs mt-1 text-gray-600">pour la réussite de chaque enfant</div>
                 </div>
-                <div className="text-sm font-medium text-gray-700">Dévouement</div>
+                
+                {/* Decorative Elements */}
+                <motion.div
+                  className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-tl from-red-200/40 to-transparent rounded-full blur-xl"
+                  animate={{
+                    scale: [1, 1.3, 1],
+                    opacity: [0.4, 0.7, 0.4],
+                  }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                />
               </motion.div>
             </div>
           </motion.div>
