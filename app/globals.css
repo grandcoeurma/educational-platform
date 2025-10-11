@@ -191,3 +191,30 @@
 .bg-brand-gradient {
   background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-red-dark) 100%);
 }
+
+/* Elegant Navigation Styles - Warm & Professional */
+nav {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Logo crisp rendering */
+nav img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Smooth text rendering for navbar */
+nav a {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Elegant focus states */
+nav a:focus-visible,
+nav button:focus-visible {
+  outline: 2px solid rgba(229, 62, 62, 0.4);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
