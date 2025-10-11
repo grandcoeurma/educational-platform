@@ -1,13 +1,60 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { Heart, Sparkles, Star } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Heart, Sparkles, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { useRef } from "react";
+import { useState, useEffect } from "react";
+
+// Carousel slides data
+const slides = [
+  {
+    id: 1,
+    image: "/home-page-1.jpg",
+    alt: "Children learning at Grand Cœur",
+    badge: "École spécialisée",
+    title: "Grand Cœur",
+    cards: [
+      {
+        icon: "star",
+        text: "Une école où chaque enfant brille à sa manière"
+      },
+      {
+        icon: "heart",
+        text: "L'école spécialisée qui croit en chaque talent"
+      }
+    ]
+  },
+  {
+    id: 2,
+    image: "/home-page-2.jpg",
+    alt: "Un lieu d'amour et d'apprentissage",
+    badge: "Notre Mission",
+    title: "Grand Cœur",
+    cards: [
+      {
+        icon: "heart",
+        text: "Un lieu d'amour, d'apprentissage et de confiance"
+      }
+    ]
+  },
+  {
+    id: 3,
+    image: "/home-page-3.jpg",
+    alt: "Programmes spécialisés",
+    badge: "Programmes Adaptés",
+    title: "Grand Cœur",
+    cards: [
+      {
+        icon: "star",
+        text: "Programmes adaptés pour les enfants atteints d'autisme et de trisomie 21"
+      }
+    ]
+  }
+];
 
 export function HeroSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [direction, setDirection] = useState(0);
 
   const handleSmoothScroll = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -16,7 +63,7 @@ export function HeroSection() {
     e.preventDefault();
     const element = document.getElementById(targetId);
     if (element) {
-      const offsetTop = element.offsetTop - 80; // Account for fixed navbar height
+      const offsetTop = element.offsetTop - 64; // Account for fixed navbar height
       window.scrollTo({
         top: offsetTop,
         behavior: "smooth",
@@ -24,104 +71,105 @@ export function HeroSection() {
     }
   };
 
-  // Word-by-word animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
-    },
+  // Auto-advance carousel every 4 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDirection(1);
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const goToSlide = (index: number) => {
+    setDirection(index > currentSlide ? 1 : -1);
+    setCurrentSlide(index);
   };
 
-  const wordVariants = {
-    hidden: {
+  const goToPrevious = () => {
+    setDirection(-1);
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  const goToNext = () => {
+    setDirection(1);
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
+
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 1000 : -1000,
       opacity: 0,
-      y: 20,
-      rotateX: -90,
-    },
-    visible: {
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
       opacity: 1,
-      y: 0,
-      rotateX: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut" as const,
-      },
     },
-  };
-
-  const AnimatedText = ({
-    text,
-    className,
-  }: {
-    text: string;
-    className: string;
-  }) => {
-    const words = text.split(" ");
-    return (
-      <motion.div
-        className={className}
-        variants={containerVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-      >
-        {words.map((word, index) => (
-          <motion.span
-            key={index}
-            variants={wordVariants}
-            className="inline-block mr-2"
-          >
-            {word}
-          </motion.span>
-        ))}
-      </motion.div>
-    );
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
   };
 
   return (
     <section
-      ref={ref}
       id="home"
       className="relative h-screen overflow-hidden"
     >
-      {/* Full Screen Background Image */}
-      <div className="absolute inset-0">
-        <Image
-          src="/home-page-1.jpg"
-          alt="Children learning at Grand Cœur"
-          fill
-          className="object-cover"
-          priority
-        />
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/20" />
-      </div>
+      {/* Carousel Background Images */}
+      <AnimatePresence initial={false} custom={direction}>
+        <motion.div
+          key={currentSlide}
+          custom={direction}
+          variants={slideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{
+            x: { type: "spring", stiffness: 300, damping: 30 },
+            opacity: { duration: 0.5 },
+          }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={slides[currentSlide].image}
+            alt={slides[currentSlide].alt}
+            fill
+            className="object-cover"
+            priority={currentSlide === 0}
+          />
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/20" />
+        </motion.div>
+      </AnimatePresence>
 
       {/* Cloud Border Top */}
       <div className="absolute top-0 left-0 right-0 h-8 bg-white">
         <div className="absolute -top-4 left-0 right-0 h-8 bg-white rounded-b-full"></div>
       </div>
 
-      {/* Content Container */}
+      {/* Content Container with AnimatePresence for slide transitions */}
       <div className="relative z-10 h-full flex items-center">
         <div className="container mx-auto px-4">
           <div className="flex items-center h-full">
-            {/* Content - Modern, Sleek Design (No White Background) */}
-            <motion.div
-              className="relative max-w-3xl"
-              initial={{ opacity: 0, x: -100 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-            >
-              {/* Content - Modern, Sleek Redesign */}
-              <div className="relative z-10 space-y-6 md:space-y-8">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={currentSlide}
+                custom={direction}
+                initial={{ opacity: 0, x: direction > 0 ? 50 : -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: direction > 0 ? -50 : 50 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="relative max-w-3xl w-full"
+              >
+                {/* Content - Modern, Sleek Redesign */}
+                <div className="relative z-10 space-y-6 md:space-y-8">
                   {/* Elegant Badge */}
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                    animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: 0.2, type: "spring" }}
                     className="inline-block"
                   >
@@ -139,7 +187,7 @@ export function HeroSection() {
                             <Sparkles className="w-4 h-4 text-red-500" />
                           </motion.div>
                           <span className="text-sm md:text-base font-semibold bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent">
-                            École spécialisée
+                            {slides[currentSlide].badge}
                           </span>
                         </div>
                       </motion.div>
@@ -157,7 +205,7 @@ export function HeroSection() {
                     {/* Main Hero Title - Grand Cœur */}
                     <motion.div
                       initial={{ opacity: 0, y: 30 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{ 
                         duration: 1, 
                         delay: 0.4, 
@@ -177,15 +225,15 @@ export function HeroSection() {
                           whileHover={{ scale: 1.02 }}
                           transition={{ duration: 0.3 }}
                         >
-                          Grand Cœur
+                          {slides[currentSlide].title}
                         </motion.span>
                       </h1>
                       {/* Decorative underline */}
                       <motion.div
                         className="h-1.5 bg-gradient-to-r from-red-500 via-red-600 to-transparent rounded-full mt-2"
                         initial={{ width: 0 }}
-                        animate={isInView ? { width: "70%" } : {}}
-                        transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
+                        animate={{ width: "70%" }}
+                        transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
                       />
                     </motion.div>
                   </div>
@@ -194,71 +242,64 @@ export function HeroSection() {
                   <motion.div
                     className="flex items-center gap-3 py-2"
                     initial={{ opacity: 0, scale: 0 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.6, delay: 1.0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.8 }}
                   >
                     <motion.div
                       className="w-12 h-[2px] bg-gradient-to-r from-transparent via-red-400 to-red-600 rounded-full"
                       initial={{ scaleX: 0 }}
-                      animate={isInView ? { scaleX: 1 } : {}}
-                      transition={{ duration: 0.8, delay: 1.1 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.8, delay: 0.9 }}
                     />
                     <Heart className="w-5 h-5 text-red-500 fill-red-500" />
                     <motion.div
                       className="w-12 h-[2px] bg-gradient-to-r from-red-600 via-red-400 to-transparent rounded-full"
                       initial={{ scaleX: 0 }}
-                      animate={isInView ? { scaleX: 1 } : {}}
-                      transition={{ duration: 0.8, delay: 1.1 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.8, delay: 0.9 }}
                     />
                   </motion.div>
 
                   {/* Feature Messages - Modern Cards */}
                   <div className="space-y-4 pt-2">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ duration: 0.6, delay: 1.2 }}
-                      className="relative group"
-                    >
-                      <div className="flex items-start gap-3 p-4 bg-white/60 backdrop-blur-sm rounded-2xl border border-red-100/50 shadow-sm hover:shadow-md transition-all">
-                        <motion.div
-                          animate={{ rotate: [0, 360] }}
-                          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                        >
-                          <Star className="w-5 h-5 text-red-500 fill-red-500 flex-shrink-0 mt-0.5" />
-                        </motion.div>
-                        <p className="text-base md:text-lg lg:text-xl font-medium text-gray-800 leading-relaxed">
-                          Une école où chaque enfant brille à sa manière
-                        </p>
-                      </div>
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ duration: 0.6, delay: 1.4 }}
-                      className="relative group"
-                    >
-                      <div className="flex items-start gap-3 p-4 bg-white/60 backdrop-blur-sm rounded-2xl border border-red-100/50 shadow-sm hover:shadow-md transition-all">
-                        <motion.div
-                          animate={{ scale: [1, 1.2, 1] }}
-                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                        >
-                          <Heart className="w-5 h-5 text-red-500 fill-red-500 flex-shrink-0 mt-0.5" />
-                        </motion.div>
-                        <p className="text-base md:text-lg lg:text-xl font-medium text-gray-700 leading-relaxed">
-                          L'école spécialisée qui croit en chaque talent
-                        </p>
-                      </div>
-                    </motion.div>
+                    {slides[currentSlide].cards.map((card, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 1.0 + index * 0.2 }}
+                        className="relative group"
+                      >
+                        <div className="flex items-start gap-3 p-4 bg-white/60 backdrop-blur-sm rounded-2xl border border-red-100/50 shadow-sm hover:shadow-md transition-all">
+                          {card.icon === "star" ? (
+                            <motion.div
+                              animate={{ rotate: [0, 360] }}
+                              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                            >
+                              <Star className="w-5 h-5 text-red-500 fill-red-500 flex-shrink-0 mt-0.5" />
+                            </motion.div>
+                          ) : (
+                            <motion.div
+                              animate={{ scale: [1, 1.2, 1] }}
+                              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                            >
+                              <Heart className="w-5 h-5 text-red-500 fill-red-500 flex-shrink-0 mt-0.5" />
+                            </motion.div>
+                          )}
+                          <p className="text-base md:text-lg lg:text-xl font-medium text-gray-800 leading-relaxed">
+                            {card.text}
+                          </p>
+                        </div>
+                      </motion.div>
+                    ))}
                   </div>
 
                   {/* CTA Button - Premium Design */}
                   <motion.div
                     className="pt-4"
                     initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6, delay: 1.6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 1.4 }}
                   >
                     <motion.a
                       href="#about"
@@ -297,9 +338,53 @@ export function HeroSection() {
                     </motion.a>
                   </motion.div>
                 </div>
-            </motion.div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
+      </div>
+
+      {/* Carousel Navigation Controls */}
+      <div className="absolute bottom-20 md:bottom-24 left-1/2 transform -translate-x-1/2 z-30 flex items-center gap-4">
+        {/* Previous Button */}
+        <motion.button
+          onClick={goToPrevious}
+          className="p-2 bg-white/20 backdrop-blur-md rounded-full border border-white/30 hover:bg-white/30 transition-all"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-5 h-5 text-white" />
+        </motion.button>
+
+        {/* Dot Indicators */}
+        <div className="flex gap-2">
+          {slides.map((_, index) => (
+            <motion.button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`transition-all rounded-full ${
+                currentSlide === index
+                  ? "w-8 h-2 bg-white"
+                  : "w-2 h-2 bg-white/50 hover:bg-white/75"
+              }`}
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Next Button */}
+        <motion.button
+          onClick={goToNext}
+          className="p-2 bg-white/20 backdrop-blur-md rounded-full border border-white/30 hover:bg-white/30 transition-all"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-5 h-5 text-white" />
+        </motion.button>
       </div>
 
       {/* Scroll Indicator */}
