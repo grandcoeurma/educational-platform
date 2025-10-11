@@ -85,7 +85,7 @@ export function AboutSection() {
   ]
 
   return (
-    <section id="about" className="py-24 md:py-32 bg-gradient-to-br from-[#fffaf9] via-white to-[#fff5f5] relative overflow-hidden" ref={ref}>
+    <section id="about" className="py-16 md:py-20 bg-gradient-to-br from-[#fffaf9] via-white to-[#fff5f5] relative overflow-hidden" ref={ref}>
       {/* Modern Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Animated Gradient Orbs */}
@@ -142,28 +142,16 @@ export function AboutSection() {
       <div className="container mx-auto px-4 relative z-10">
         {/* Modern Section Title */}
         <motion.div
-          className="text-center mb-20"
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <motion.div
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-50 to-pink-50 rounded-full border border-red-200/50 shadow-sm mb-6"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <Sparkles className="w-4 h-4 text-red-500" />
-            <span className="text-sm font-semibold bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent">
-              À propos de nous
-            </span>
-          </motion.div>
-          
           <motion.h2
             className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 bg-gradient-to-r from-red-600 via-red-700 to-red-900 bg-clip-text text-transparent"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
             style={{ letterSpacing: '-0.02em' }}
           >
             Qui sommes-nous ?
@@ -173,7 +161,7 @@ export function AboutSection() {
             className="w-24 h-1 bg-gradient-to-r from-red-500 to-red-700 rounded-full mx-auto"
             initial={{ width: 0 }}
             animate={isInView ? { width: 96 } : {}}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
           />
         </motion.div>
 
@@ -405,77 +393,6 @@ export function AboutSection() {
                 transition={{ duration: 4, repeat: Infinity }}
               />
             </motion.div>
-
-            {/* Enhanced Stats Cards */}
-            <div className="grid grid-cols-2 gap-4">
-              <motion.div
-                className="relative bg-gradient-to-br from-red-500 via-red-600 to-red-700 p-6 rounded-3xl shadow-2xl text-white overflow-hidden"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.6, delay: 0.8 }}
-                whileHover={{ scale: 1.05, y: -8, boxShadow: "0 30px 60px rgba(239, 68, 68, 0.4)" }}
-              >
-                {/* Animated Background Pattern */}
-                <motion.div
-                  className="absolute inset-0 opacity-20"
-                  animate={{
-                    backgroundPosition: ["0% 0%", "100% 100%"],
-                  }}
-                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                  style={{
-                    backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
-                    backgroundSize: "20px 20px",
-                  }}
-                />
-                
-                <div className="relative z-10">
-                  <motion.div
-                    className="text-5xl font-black mb-2"
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    10+
-                  </motion.div>
-                  <div className="text-sm font-bold opacity-95">Ans d'expérience</div>
-                  <div className="text-xs mt-1 opacity-80">dans l'accompagnement spécialisé</div>
-                </div>
-                
-                {/* Corner Accent */}
-                <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-bl-[60px]" />
-              </motion.div>
-              
-              <motion.div
-                className="relative bg-gradient-to-br from-white to-red-50 backdrop-blur-sm p-6 rounded-3xl shadow-2xl border-2 border-red-200 overflow-hidden"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.6, delay: 0.9 }}
-                whileHover={{ scale: 1.05, y: -8, boxShadow: "0 30px 60px rgba(239, 68, 68, 0.2)" }}
-              >
-                <div className="relative z-10">
-                  <div className="flex items-center gap-2 mb-2">
-                    <motion.div
-                      animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    >
-                      <Award className="w-8 h-8 text-red-600" />
-                    </motion.div>
-                    <div className="text-4xl font-black text-gray-900">100%</div>
-                  </div>
-                  <div className="text-sm font-bold text-gray-800">Dévouement</div>
-                  <div className="text-xs mt-1 text-gray-600">pour la réussite de chaque enfant</div>
-                </div>
-                
-                {/* Decorative Elements */}
-                <motion.div
-                  className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-tl from-red-200/40 to-transparent rounded-full blur-xl"
-                  animate={{
-                    scale: [1, 1.3, 1],
-                    opacity: [0.4, 0.7, 0.4],
-                  }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-              </motion.div>
-            </div>
           </motion.div>
 
           {/* Image Gallery - Organic Wavy Shape Design */}
@@ -555,7 +472,7 @@ export function AboutSection() {
                   
                   <div className="w-full h-full relative">
                     <Image
-                      src="/qui-somme-nous-1.jpg"
+                      src="/who-are-we.jpg"
                       alt="Environnement d'apprentissage à Grand Cœur"
                       fill
                       className="object-cover"
@@ -770,114 +687,6 @@ export function AboutSection() {
             </div>
           </motion.div>
         </div>
-
-        {/* Features Grid - Modern Card Design */}
-        <motion.div
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1 }}
-        >
-          {features.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              className="group relative"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 1.2 + index * 0.1 }}
-            >
-              {/* Card Container */}
-              <motion.div
-                className="relative bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-lg border border-red-100/50 hover:border-red-200 transition-all h-full overflow-hidden"
-                whileHover={{ 
-                  y: -8, 
-                  scale: 1.02,
-                  boxShadow: "0 20px 40px rgba(239, 68, 68, 0.15)",
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                {/* Animated gradient background on hover */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-red-50/50 via-pink-50/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                />
-                
-                {/* Icon Container */}
-                <motion.div
-                  className="relative w-16 h-16 mb-6"
-                  whileHover={{ 
-                    rotate: [0, -10, 10, -10, 0],
-                    scale: 1.1,
-                  }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-red-700 rounded-2xl" />
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl blur-lg opacity-50"
-                    animate={{
-                      scale: [1, 1.2, 1],
-                      opacity: [0.5, 0.8, 0.5],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: index * 0.2,
-                    }}
-                  />
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    <feature.icon className="w-8 h-8 text-white" />
-                  </div>
-                </motion.div>
-                
-                {/* Title */}
-                <motion.h3 
-                  className="text-xl font-bold text-gray-900 mb-3 relative"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 1.4 + index * 0.1 }}
-                >
-                  {feature.title}
-                </motion.h3>
-                
-                {/* Description */}
-                <motion.p 
-                  className="text-gray-700 leading-relaxed relative"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 1.5 + index * 0.1 }}
-                >
-                  {feature.description}
-                </motion.p>
-
-                {/* Hover Indicator */}
-                <motion.div
-                  className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-red-500 via-red-600 to-red-700 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-b-3xl"
-                />
-
-                {/* Floating Sparkle */}
-                <motion.div
-                  className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity"
-                  animate={{
-                    rotate: [0, 360],
-                    scale: [1, 1.2, 1],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <Sparkles className="w-5 h-5 text-red-400" />
-                </motion.div>
-
-                {/* Decorative Corner Element */}
-                <motion.div
-                  className="absolute -top-2 -right-2 w-20 h-20 bg-gradient-to-br from-red-200/30 to-pink-200/30 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                />
-              </motion.div>
-            </motion.div>
-          ))}
-        </motion.div>
       </div>
     </section>
   )

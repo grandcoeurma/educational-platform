@@ -255,7 +255,7 @@ export function DailyLifeSection() {
               >
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
                   <Image
-                    src="/diverse-children-with-disabilities-playing-and-lea.jpg"
+                    src="/who-are-we.jpg"
                     alt="La vie quotidienne à Grand Cœur"
                     fill
                     className="object-cover"
