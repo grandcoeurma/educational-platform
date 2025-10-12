@@ -36,7 +36,7 @@ export function ContactSection() {
       scale: 1,
       transition: {
         duration: 0.4,
-        ease: "easeOut"
+        ease: "easeOut" as const
       }
     }
   }
@@ -237,24 +237,6 @@ export function ContactSection() {
                     </motion.div>
             ))}
 
-            {/* Hours */}
-              <motion.div 
-              className="bg-gradient-to-br from-red-500 to-red-700 rounded-2xl p-6 shadow-xl text-white"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 1.1 }}
-                whileHover={{ scale: 1.02 }}
-              >
-              <div className="flex items-center gap-3 mb-4">
-                <Clock className="w-6 h-6" />
-                <h3 className="font-bold text-lg">Horaires d'ouverture</h3>
-              </div>
-              <div className="space-y-2 text-white/90">
-                <p>Lundi - Vendredi : 8h00 - 17h00</p>
-                <p>Samedi : 9h00 - 13h00</p>
-                <p>Dimanche : Fermé</p>
-              </div>
-            </motion.div>
             </motion.div>
 
             {/* Contact Form */}
@@ -361,6 +343,122 @@ export function ContactSection() {
             </form>
             </motion.div>
         </div>
+
+        {/* Interactive Map Section */}
+        <motion.div
+          className="mt-16 max-w-6xl mx-auto"
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 1.2 }}
+        >
+          <motion.div
+            className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-2xl overflow-hidden"
+            whileHover={{ scale: 1.01, transition: { duration: 0.3 } }}
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                <MapPin className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900">Notre Localisation</h3>
+                <p className="text-gray-600">Centre Grand Cœur, Casablanca</p>
+              </div>
+            </div>
+
+            {/* Map Container */}
+            <div className="relative w-full h-[450px] rounded-2xl overflow-hidden border-4 border-red-100 shadow-lg">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3324.0!2d-7.634389!3d33.511556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzPCsDMwJzQxLjYiTiA3wrAzOCcwMy44Ilc!5e0!3m2!1sen!2s!4v1234567890"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="grayscale-0 hover:grayscale-0 transition-all duration-300"
+              />
+              
+              {/* Map Overlay Info Card */}
+              <motion.div
+                className="absolute bottom-6 left-6 bg-white rounded-2xl p-4 shadow-2xl max-w-xs"
+                initial={{ opacity: 0, x: -20 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.6, delay: 1.5 }}
+                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+              >
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900 text-sm mb-1">Centre Grand Cœur</h4>
+                    <p className="text-xs text-gray-600 leading-relaxed">
+                      123 Avenue de l'Espoir<br />
+                      Casablanca, Maroc
+                    </p>
+                    <motion.a
+                      href="https://www.google.com/maps/search/?api=1&query=33.511556,-7.634389"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-red-600 hover:text-red-700"
+                      whileHover={{ x: 3 }}
+                    >
+                      Obtenir l'itinéraire →
+                    </motion.a>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Additional Info Below Map */}
+            <div className="mt-6 grid sm:grid-cols-3 gap-4">
+              <motion.div
+                className="flex items-center gap-3 p-4 bg-gradient-to-br from-red-50 to-orange-50 rounded-xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 1.6 }}
+              >
+                <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-600 font-medium">Distance</p>
+                  <p className="text-sm font-bold text-gray-900">Centre-ville</p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="flex items-center gap-3 p-4 bg-gradient-to-br from-red-50 to-orange-50 rounded-xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 1.7 }}
+              >
+                <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-600 font-medium">Parking</p>
+                  <p className="text-sm font-bold text-gray-900">Disponible</p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="flex items-center gap-3 p-4 bg-gradient-to-br from-red-50 to-orange-50 rounded-xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 1.8 }}
+              >
+                <div className="w-10 h-10 bg-rose-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Heart className="w-5 h-5 text-white" fill="currentColor" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-600 font-medium">Accès</p>
+                  <p className="text-sm font-bold text-gray-900">Facile</p>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   )
