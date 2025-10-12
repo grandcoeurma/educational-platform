@@ -455,157 +455,277 @@ export function DailyLifeSection() {
             </motion.div>
           </motion.div>
 
-          {/* Modern Image Layout */}
+          {/* Playful Image Layout with Organic Shapes - Inspired by latest-pic.png */}
           <motion.div
-            className="relative flex justify-center items-center"
+            className="relative flex justify-center items-center min-h-[600px]"
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            {/* Modern Image Container with Layered Design */}
             <div className="relative w-full max-w-lg">
-              {/* Background Decorative Circle */}
+              {/* Top-left curved abstract shape (pink wave) */}
               <motion.div
-                className="absolute -inset-6 bg-gradient-to-br from-red-100 to-red-200 rounded-full opacity-25"
-                animate={{
-                  rotate: [0, -360],
-                }}
-                transition={{
-                  duration: 25,
-                  repeat: Infinity,
-                  ease: "linear",
+                className="absolute -top-20 -left-12 w-80 h-40 bg-gradient-to-br from-pink-200/60 to-pink-300/40 rounded-[60%_40%_30%_70%/60%_30%_70%_40%] blur-sm"
+                initial={{ opacity: 0, x: -50, y: -30 }}
+                animate={isInView ? { opacity: 1, x: 0, y: 0 } : {}}
+                transition={{ duration: 1, delay: 1 }}
+                whileHover={{
+                  scale: 1.05,
+                  rotate: 5,
+                  transition: { duration: 0.4 }
                 }}
               />
-              
-              {/* Main Image Container */}
+
+              {/* Main organic blob-shaped frame for the image */}
               <motion.div
-                className="relative z-10 rounded-3xl overflow-hidden shadow-2xl bg-white p-3"
-                whileHover={{ 
-                  scale: 1.03,
-                  rotateY: 3,
-                  transition: { duration: 0.3 }
-                }}
-                initial={{ rotateY: -8 }}
-                animate={{ rotateY: 0 }}
-                transition={{ duration: 0.8, delay: 1.0 }}
+                className="relative z-10 w-full"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={isInView ? { scale: 1, opacity: 1 } : {}}
+                transition={{ duration: 0.8, delay: 1.2 }}
               >
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
-                  <Image
-                    src="/who-are-we.jpg"
-                    alt="La vie quotidienne à Grand Cœur"
-                    fill
-                    className="object-cover"
-                  />
-                  {/* Modern Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-red-900/25 via-transparent to-transparent" />
-                  
-                  {/* Floating Hearts Overlay */}
-                  <div className="absolute inset-0 pointer-events-none">
-                    {[...Array(4)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        className="absolute text-red-300/50 text-xl"
-                        style={{
-                          left: `${15 + i * 25}%`,
-                          top: `${20 + i * 15}%`,
-                        }}
-                        animate={{
-                          y: [0, -15, 0],
-                          opacity: [0.4, 0.9, 0.4],
-                          scale: [1, 1.3, 1],
-                        }}
-                        transition={{
-                          duration: 4,
-                          repeat: Infinity,
-                          delay: i * 0.7,
-                          ease: "easeInOut",
-                        }}
-                      >
-                        ♥
-                      </motion.div>
-                    ))}
+                {/* Organic blob container with morphing animation */}
+                <motion.div
+                  className="relative overflow-hidden shadow-2xl"
+                  style={{
+                    borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%",
+                  }}
+                  animate={{
+                    borderRadius: [
+                      "60% 40% 30% 70% / 60% 30% 70% 40%",
+                      "30% 60% 70% 40% / 50% 60% 30% 70%",
+                      "60% 40% 30% 70% / 60% 30% 70% 40%"
+                    ],
+                  }}
+                  transition={{
+                    duration: 15,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  whileHover={{
+                    scale: 1.03,
+                    transition: { duration: 0.4 }
+                  }}
+                >
+                  <div className="relative aspect-[4/3]">
+                    <Image
+                      src="/who-are-we.jpg"
+                      alt="La vie quotidienne à Grand Cœur"
+                      fill
+                      className="object-cover"
+                    />
+                    {/* Warm light overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-200/20 via-transparent to-orange-200/10" />
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
 
-              {/* Modern Floating Badge */}
+              {/* Colorful vector circles - Red-toned theme */}
+              {/* Large red circle (large, left) */}
               <motion.div
-                className="absolute -top-8 -right-8 bg-white rounded-2xl p-5 shadow-2xl border border-red-100 z-20"
+                className="absolute -left-16 top-1/3 w-32 h-32 border-8 border-red-500 rounded-full"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.6, delay: 1.4 }}
+                whileHover={{
+                  scale: 1.15,
+                  rotate: 15,
+                  borderWidth: "12px",
+                  transition: { duration: 0.3 }
+                }}
+              />
+
+              {/* Large orange circle (bottom-right) */}
+              <motion.div
+                className="absolute -bottom-12 right-12 w-48 h-48 border-[16px] border-orange-500 rounded-full z-20"
+                initial={{ opacity: 0, scale: 0, rotate: -45 }}
+                animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+                transition={{ duration: 0.8, delay: 1.6 }}
+                whileHover={{
+                  scale: 1.1,
+                  rotate: -10,
+                  borderColor: "#f97316",
+                  transition: { duration: 0.4 }
+                }}
+              />
+
+              {/* Small rose circle (left) */}
+              <motion.div
+                className="absolute bottom-24 -left-4 w-16 h-16 border-6 border-rose-500 rounded-full"
+                initial={{ opacity: 0, x: -20 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: 1.8 }}
+                whileHover={{
+                  scale: 1.2,
+                  rotate: -20,
+                  y: -5,
+                  transition: { duration: 0.3 }
+                }}
+              />
+
+              {/* Small red-orange circle (top-right) */}
+              <motion.div
+                className="absolute -top-4 right-16 w-12 h-12 border-4 border-red-400 rounded-full"
+                initial={{ opacity: 0, y: -20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 2 }}
+                whileHover={{
+                  scale: 1.25,
+                  rotate: 25,
+                  x: 5,
+                  transition: { duration: 0.3 }
+                }}
+              />
+
+              {/* Small solid red circle (top-center) */}
+              <motion.div
+                className="absolute -top-8 left-1/2 w-8 h-8 bg-red-500 rounded-full shadow-lg"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={isInView ? { 
+                  opacity: 1, 
+                  scale: 1,
+                  y: [0, -8, 0],
+                } : {}}
+                transition={{ 
+                  opacity: { duration: 0.4, delay: 2.2 },
+                  scale: { duration: 0.4, delay: 2.2 },
+                  y: { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
+                }}
+                whileHover={{
+                  scale: 1.4,
+                  boxShadow: "0 10px 25px rgba(239, 68, 68, 0.4)",
+                  transition: { duration: 0.3 }
+                }}
+              />
+
+              {/* Medium solid orange circle (bottom-left area) */}
+              <motion.div
+                className="absolute bottom-8 left-8 w-12 h-12 bg-orange-400 rounded-full shadow-lg"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={isInView ? { 
+                  opacity: 1, 
+                  scale: 1,
+                  rotate: [0, 360],
+                } : {}}
+                transition={{ 
+                  opacity: { duration: 0.4, delay: 2.4 },
+                  scale: { duration: 0.4, delay: 2.4 },
+                  rotate: { duration: 20, repeat: Infinity, ease: "linear" }
+                }}
+                whileHover={{
+                  scale: 1.3,
+                  rotate: 180,
+                  y: -8,
+                  transition: { duration: 0.4 }
+                }}
+              />
+
+              {/* Small pink-red circle (right side) */}
+              <motion.div
+                className="absolute top-1/4 -right-6 w-10 h-10 border-4 border-pink-500 rounded-full"
+                initial={{ opacity: 0, x: 20 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: 2.6 }}
+                whileHover={{
+                  scale: 1.3,
+                  rotate: -30,
+                  x: 10,
+                  transition: { duration: 0.3 }
+                }}
+              />
+
+              {/* Abstract curved shape (bottom area) */}
+              <motion.div
+                className="absolute -bottom-16 left-1/4 w-32 h-20 bg-gradient-to-r from-orange-200/50 to-red-200/40 rounded-[50%] blur-sm transform -rotate-12"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { 
+                  opacity: 1, 
+                  y: 0,
+                  rotate: [-12, -8, -12],
+                } : {}}
+                transition={{ 
+                  opacity: { duration: 0.6, delay: 1.5 },
+                  y: { duration: 0.6, delay: 1.5 },
+                  rotate: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+                }}
+                whileHover={{
+                  scale: 1.1,
+                  rotate: -5,
+                  transition: { duration: 0.4 }
+                }}
+              />
+
+              {/* Playful floating badge with warm colors */}
+              <motion.div
+                className="absolute -top-12 -right-12 bg-white rounded-[32px] px-6 py-4 shadow-2xl border-2 border-orange-200 z-30"
                 initial={{ opacity: 0, scale: 0, rotate: 180 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                transition={{ delay: 1.5, type: "spring", stiffness: 150 }}
+                animate={isInView ? { 
+                  opacity: 1, 
+                  scale: 1, 
+                  rotate: 0,
+                  y: [0, -8, 0],
+                } : {}}
+                transition={{ 
+                  opacity: { duration: 0.6, delay: 1.8 },
+                  scale: { duration: 0.6, delay: 1.8, type: "spring", stiffness: 200 },
+                  rotate: { duration: 0.6, delay: 1.8 },
+                  y: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 2.5 }
+                }}
                 whileHover={{ 
                   scale: 1.08,
-                  rotate: -3,
-                  transition: { duration: 0.3 }
+                  rotate: -5,
+                  y: -12,
+                  transition: { duration: 0.3, y: { duration: 0.3 } }
                 }}
               >
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
                   <motion.div 
-                    className="w-14 h-14 bg-gradient-to-br from-red-500 to-red-700 rounded-xl flex items-center justify-center"
+                    className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg"
                     animate={{
-                      boxShadow: [
-                        "0 0 0 0 rgba(229, 62, 62, 0.4)",
-                        "0 0 0 10px rgba(229, 62, 62, 0)",
-                        "0 0 0 0 rgba(229, 62, 62, 0)"
-                      ]
+                      rotate: [0, 5, -5, 0],
                     }}
                     transition={{
-                      duration: 2.5,
+                      duration: 3,
                       repeat: Infinity,
-                      ease: "easeInOut"
+                      ease: "easeInOut",
                     }}
                   >
-                    <Heart className="w-7 h-7 text-white" fill="currentColor" />
+                    <Heart className="w-6 h-6 text-white" fill="currentColor" />
                   </motion.div>
                   <div>
-                    <div className="text-xl font-bold text-gray-800">Avec amour</div>
-                    <div className="text-sm text-gray-600">Chaque jour</div>
+                    <div className="text-lg font-bold text-gray-800">Avec amour</div>
+                    <div className="text-xs text-gray-600">Chaque jour</div>
                   </div>
                 </div>
               </motion.div>
 
-              {/* Modern Decorative Elements */}
-              <motion.div
-                className="absolute -top-10 -left-10 w-24 h-24 bg-gradient-to-br from-red-300/25 to-red-500/25 rounded-full blur-2xl"
-                animate={{
-                  scale: [1, 1.4, 1],
-                  opacity: [0.3, 0.7, 0.3],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-              
-              <motion.div
-                className="absolute -bottom-10 -left-6 w-20 h-20 bg-gradient-to-br from-red-400/20 to-red-600/20 rounded-full blur-xl"
-                animate={{
-                  scale: [1, 1.3, 1],
-                  opacity: [0.2, 0.6, 0.2],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1.5,
-                }}
-              />
-
-              <motion.div
-                className="absolute top-1/2 -right-8 w-16 h-16 bg-gradient-to-br from-red-200/30 to-red-400/30 rounded-full blur-lg"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.8, 0.3],
-                }}
-                transition={{
-                  duration: 3.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.8,
-                }}
-              />
+              {/* Additional playful dots */}
+              {[
+                { size: "w-4 h-4", color: "bg-rose-400", top: "15%", right: "5%", delay: 2.8 },
+                { size: "w-3 h-3", color: "bg-orange-400", top: "45%", right: "-2%", delay: 3 },
+                { size: "w-5 h-5", color: "bg-red-400", bottom: "20%", right: "8%", delay: 3.2 },
+              ].map((dot, i) => (
+                <motion.div
+                  key={i}
+                  className={`absolute ${dot.size} ${dot.color} rounded-full shadow-md`}
+                  style={{ top: dot.top, bottom: dot.bottom, right: dot.right }}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={isInView ? { 
+                    opacity: 1, 
+                    scale: 1,
+                    y: [0, -10, 0],
+                  } : {}}
+                  transition={{ 
+                    opacity: { duration: 0.3, delay: dot.delay },
+                    scale: { duration: 0.3, delay: dot.delay },
+                    y: { duration: 2 + i * 0.5, repeat: Infinity, ease: "easeInOut", delay: dot.delay }
+                  }}
+                  whileHover={{
+                    scale: 1.5,
+                    y: -15,
+                    transition: { duration: 0.3, y: { duration: 0.3 } }
+                  }}
+                />
+              ))}
             </div>
           </motion.div>
         </div>
