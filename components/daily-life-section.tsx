@@ -34,7 +34,7 @@ export function DailyLifeSection() {
       scale: 1,
       transition: {
         duration: 0.4,
-        ease: "easeOut"
+        ease: "easeOut" as const
       }
     }
   }
@@ -70,26 +70,262 @@ export function DailyLifeSection() {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Section Title */}
+        {/* Enhanced Section Title with Vector Strokes */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-16 relative"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <motion.h2
-            className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent"
+          {/* Decorative Frame with Vector Strokes */}
+          <div className="relative inline-block">
+            {/* Top Vector Stroke */}
+            <motion.svg
+              className="absolute -top-16 left-1/2 -translate-x-1/2 w-80 h-20 pointer-events-none"
+              viewBox="0 0 320 80"
+              initial={{ opacity: 0, y: -20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 1, delay: 0.3 }}
+            >
+              <defs>
+                <linearGradient id="topStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#ef4444" />
+                  <stop offset="50%" stopColor="#f97316" />
+                  <stop offset="100%" stopColor="#ef4444" />
+                </linearGradient>
+              </defs>
+              <motion.path
+                d="M 10 60 Q 80 10, 160 40 T 310 60"
+                fill="none"
+                stroke="url(#topStroke)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
+                transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
+              />
+              {/* Floating sparkles along the stroke */}
+              {[0.2, 0.5, 0.8].map((offset, i) => (
+                <motion.circle
+                  key={i}
+                  cx={10 + 300 * offset}
+                  cy={40}
+                  r="3"
+                  fill="#f97316"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={isInView ? {
+                    scale: [0, 1.5, 1],
+                    opacity: [0, 1, 0.7],
+                  } : {}}
+                  transition={{
+                    duration: 1,
+                    delay: 0.8 + i * 0.2,
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                  }}
+                />
+              ))}
+            </motion.svg>
+
+            {/* Main Title with Enhanced Background */}
+            <motion.div
+              className="relative px-12 py-8 rounded-[40px] bg-gradient-to-br from-white via-red-50/30 to-orange-50/30 backdrop-blur-sm border-2 border-red-100 shadow-xl"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={isInView ? { scale: 1, opacity: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              whileHover={{
+                scale: 1.02,
+                boxShadow: "0 20px 50px rgba(239, 68, 68, 0.15)",
+                transition: { duration: 0.3 }
+              }}
+            >
+              {/* Organic Background Blobs */}
+              <motion.div
+                className="absolute -inset-2 bg-gradient-to-br from-red-200/20 via-orange-200/20 to-red-200/20 rounded-[40%_60%_50%_50%/50%_50%_60%_40%] blur-xl -z-10"
+                animate={{
+                  rotate: [0, 360],
+                  borderRadius: [
+                    "40% 60% 50% 50% / 50% 50% 60% 40%",
+                    "60% 40% 60% 40% / 40% 60% 40% 60%",
+                    "40% 60% 50% 50% / 50% 50% 60% 40%"
+                  ],
+                }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              />
+
+              {/* Floating decorative elements */}
+              <motion.div
+                className="absolute -top-3 -left-3 w-8 h-8 bg-gradient-to-br from-red-400 to-orange-400 rounded-full opacity-60"
+                animate={{
+                  scale: [1, 1.3, 1],
+                  rotate: [0, 180, 360],
+                }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute -bottom-3 -right-3 w-6 h-6 bg-gradient-to-br from-orange-400 to-red-400 rounded-full opacity-60"
+                animate={{
+                  scale: [1, 1.4, 1],
+                  rotate: [360, 180, 0],
+                }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              />
+
+              <motion.h2
+                className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-red-600 via-orange-600 to-red-600 bg-clip-text text-transparent relative z-10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                La Vie à Grand Cœur
+              </motion.h2>
+
+              {/* Animated underline */}
+              <motion.div
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent rounded-full"
+                initial={{ width: 0, opacity: 0 }}
+                animate={isInView ? { width: "60%", opacity: 1 } : {}}
+                transition={{ duration: 1, delay: 0.8 }}
+              />
+            </motion.div>
+
+            {/* Bottom Vector Stroke */}
+            <motion.svg
+              className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-96 h-20 pointer-events-none"
+              viewBox="0 0 384 80"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 1, delay: 0.5 }}
+            >
+              <defs>
+                <linearGradient id="bottomStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#f97316" />
+                  <stop offset="50%" stopColor="#ef4444" />
+                  <stop offset="100%" stopColor="#f97316" />
+                </linearGradient>
+              </defs>
+              <motion.path
+                d="M 10 20 Q 96 50, 192 30 T 374 20"
+                fill="none"
+                stroke="url(#bottomStroke)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
+                transition={{ duration: 1.5, delay: 0.7, ease: "easeInOut" }}
+              />
+              {/* Animated hearts along bottom stroke */}
+              {[0.25, 0.5, 0.75].map((offset, i) => (
+                <motion.text
+                  key={i}
+                  x={10 + 364 * offset}
+                  y={30}
+                  fontSize="16"
+                  textAnchor="middle"
+                  fill="#ef4444"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={isInView ? {
+                    scale: [0, 1.2, 1],
+                    opacity: [0, 1, 0.8],
+                    y: [30, 25, 30],
+                  } : {}}
+                  transition={{
+                    duration: 1.5,
+                    delay: 1 + i * 0.2,
+                    repeat: Infinity,
+                    repeatDelay: 2.5,
+                  }}
+                >
+                  ♥
+                </motion.text>
+              ))}
+            </motion.svg>
+
+            {/* Side decorative strokes */}
+            <motion.svg
+              className="absolute top-1/2 -left-20 w-16 h-32 pointer-events-none hidden lg:block"
+              viewBox="0 0 64 128"
+              initial={{ opacity: 0, x: -20 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 1, delay: 0.6 }}
+            >
+              <motion.path
+                d="M 50 10 Q 20 64, 50 118"
+                fill="none"
+                stroke="#f97316"
+                strokeWidth="2"
+                strokeLinecap="round"
+                initial={{ pathLength: 0 }}
+                animate={isInView ? { pathLength: 1 } : {}}
+                transition={{ duration: 1.2, delay: 0.9 }}
+              />
+            </motion.svg>
+
+            <motion.svg
+              className="absolute top-1/2 -right-20 w-16 h-32 pointer-events-none hidden lg:block"
+              viewBox="0 0 64 128"
+              initial={{ opacity: 0, x: 20 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 1, delay: 0.6 }}
+            >
+              <motion.path
+                d="M 14 10 Q 44 64, 14 118"
+                fill="none"
+                stroke="#ef4444"
+                strokeWidth="2"
+                strokeLinecap="round"
+                initial={{ pathLength: 0 }}
+                animate={isInView ? { pathLength: 1 } : {}}
+                transition={{ duration: 1.2, delay: 0.9 }}
+              />
+            </motion.svg>
+          </div>
+
+          {/* Enhanced Description */}
+          <motion.div
+            className="mt-20 relative inline-block"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 1 }}
           >
-            La Vie à Grand Cœur
-          </motion.h2>
+            <motion.div
+              className="relative px-8 py-6 rounded-[32px] bg-gradient-to-br from-white to-red-50/40 border border-red-100 shadow-lg max-w-3xl"
+              whileHover={{
+                scale: 1.02,
+                boxShadow: "0 15px 40px rgba(239, 68, 68, 0.1)",
+                transition: { duration: 0.3 }
+              }}
+            >
+              {/* Orbiting sparkles */}
+              {[0, 1, 2].map((i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-2 h-2 bg-orange-400 rounded-full"
+                  style={{
+                    top: "50%",
+                    left: "50%",
+                  }}
+                  animate={{
+                    x: [0, Math.cos((i * 120 * Math.PI) / 180) * 200],
+                    y: [0, Math.sin((i * 120 * Math.PI) / 180) * 80],
+                    scale: [1, 0.5, 1],
+                    opacity: [0.7, 0.3, 0.7],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    delay: i * 0.4,
+                    ease: "easeInOut",
+                  }}
+                />
+              ))}
 
-          <AnimatedText 
-            text="Chaque journée est une nouvelle aventure d'apprentissage, de joie et de découverte."
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
-          />
+              <AnimatedText 
+                text="Chaque journée est une nouvelle aventure d'apprentissage, de joie et de découverte."
+                className="text-xl text-gray-700 font-medium"
+              />
+            </motion.div>
+          </motion.div>
         </motion.div>
 
         {/* Main Content */}
