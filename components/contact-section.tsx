@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef, useState } from "react"
-import { MapPin, Phone, Mail, Send, Clock, Heart } from "lucide-react"
+import { MapPin, Phone, Mail, Send, Clock, Heart, Facebook, Instagram } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -63,10 +63,10 @@ export function ContactSection() {
     )
   }
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    fullName: "",
     phone: "",
-    message: "",
+    conditionType: "",
+    address: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -76,7 +76,7 @@ export function ContactSection() {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500))
     alert("Message envoyé avec succès! Nous vous contacterons bientôt.")
-    setFormData({ name: "", email: "", phone: "", message: "" })
+    setFormData({ fullName: "", phone: "", conditionType: "", address: "" })
     setIsSubmitting(false)
   }
 
@@ -84,19 +84,19 @@ export function ContactSection() {
     {
       icon: MapPin,
       title: "Adresse",
-      content: "Centre Grand Cœur\n123 Avenue de l'Espoir\nCasablanca, Maroc",
+      content: "Centre grand cœur\nRoute bouskoura, N°109, 7km sidi Maârouf\nAin chok Casablanca",
       color: "from-pink-500 to-rose-500",
     },
     {
       icon: Phone,
       title: "Téléphone",
-      content: "+212 5 22 XX XX XX",
+      content: "0522 10 32 99\n0661 98 73 99",
       color: "from-purple-500 to-indigo-500",
     },
     {
       icon: Mail,
       title: "Email",
-      content: "contact@grandcoeur.ma",
+      content: "contact@centregrandcoeur.com",
       color: "from-blue-500 to-cyan-500",
     },
   ]
@@ -237,6 +237,64 @@ export function ContactSection() {
                     </motion.div>
             ))}
 
+            {/* Social Media Links */}
+            <motion.div
+              className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg relative overflow-hidden"
+              initial={{ opacity: 0, y: 30, rotateX: -10 }}
+              animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+              transition={{ duration: 0.6, delay: 1.1, type: "spring", stiffness: 100 }}
+              whileHover={{ 
+                y: -8, 
+                scale: 1.03,
+                rotateX: 5,
+                transition: { duration: 0.3 }
+              }}
+            >
+              <h3 className="font-bold text-lg text-gray-800 mb-4 flex items-center gap-2">
+                <Heart className="w-5 h-5 text-red-500" fill="currentColor" />
+                Suivez-nous
+              </h3>
+              <div className="space-y-3">
+                <a
+                  href="https://www.facebook.com/centregrandcoeur"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 transition-all group"
+                >
+                  <motion.div
+                    className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <Facebook className="w-5 h-5 text-white" />
+                  </motion.div>
+                  <div>
+                    <div className="font-semibold text-gray-800">Facebook</div>
+                    <div className="text-sm text-gray-600">centre grand cœur</div>
+                  </div>
+                </a>
+
+                <a
+                  href="https://www.instagram.com/centre.grandcoeur"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-pink-50 to-purple-100 hover:from-pink-100 hover:to-purple-200 transition-all group"
+                >
+                  <motion.div
+                    className="w-10 h-10 bg-gradient-to-br from-pink-500 via-purple-500 to-orange-500 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <Instagram className="w-5 h-5 text-white" />
+                  </motion.div>
+                  <div>
+                    <div className="font-semibold text-gray-800">Instagram</div>
+                    <div className="text-sm text-gray-600">centre.grandcoeur</div>
+                  </div>
+                </a>
+              </div>
+            </motion.div>
+
             </motion.div>
 
             {/* Contact Form */}
@@ -251,40 +309,23 @@ export function ContactSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 1 }}
                   >
-                <Label htmlFor="name" className="text-gray-700 font-semibold">Nom complet</Label>
+                <Label htmlFor="fullName" className="text-gray-700 font-semibold">Nom et prénom</Label>
                     <Input
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  id="fullName"
+                  value={formData.fullName}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                       required
                   className="mt-2 border-red-200 focus:border-red-500 focus:ring-red-500"
-                  placeholder="Votre nom"
-                    />
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 1.1 }}
-                  >
-                <Label htmlFor="email" className="text-gray-700 font-semibold">Email</Label>
-                    <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      required
-                  className="mt-2 border-red-200 focus:border-red-500 focus:ring-red-500"
-                  placeholder="votre.email@exemple.com"
+                  placeholder="Votre nom complet"
                     />
                   </motion.div>
 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 1.2 }}
+                transition={{ delay: 1.1 }}
                 >
-                <Label htmlFor="phone" className="text-gray-700 font-semibold">Téléphone</Label>
+                <Label htmlFor="phone" className="text-gray-700 font-semibold">Numéro de téléphone</Label>
                   <Input
                     id="phone"
                     type="tel"
@@ -292,24 +333,40 @@ export function ContactSection() {
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     required
                   className="mt-2 border-red-200 focus:border-red-500 focus:ring-red-500"
-                  placeholder="+212 6XX XX XX XX"
+                  placeholder="06XX XX XX XX"
                   />
                 </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 1.2 }}
+                  >
+                <Label htmlFor="conditionType" className="text-gray-700 font-semibold">Type de condition</Label>
+                    <Input
+                  id="conditionType"
+                  value={formData.conditionType}
+                  onChange={(e) => setFormData({ ...formData, conditionType: e.target.value })}
+                      required
+                  className="mt-2 border-red-200 focus:border-red-500 focus:ring-red-500"
+                  placeholder="Ex: Autisme, Trisomie 21, etc."
+                    />
+                  </motion.div>
 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 1.3 }}
               >
-                <Label htmlFor="message" className="text-gray-700 font-semibold">Message</Label>
+                <Label htmlFor="address" className="text-gray-700 font-semibold">Adresse</Label>
                 <textarea
-                  id="message"
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  id="address"
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     required
-                  rows={5}
+                  rows={3}
                   className="mt-2 w-full px-3 py-2 border border-red-200 rounded-lg focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:outline-none resize-none"
-                  placeholder="Parlez-nous de votre enfant et de vos besoins..."
+                  placeholder="Votre adresse complète"
                   />
                 </motion.div>
 
