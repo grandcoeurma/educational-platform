@@ -67,6 +67,7 @@ export function ContactSection() {
     phone: "",
     conditionType: "",
     address: "",
+    message: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -76,7 +77,7 @@ export function ContactSection() {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500))
     alert("Message envoyé avec succès! Nous vous contacterons bientôt.")
-    setFormData({ fullName: "", phone: "", conditionType: "", address: "" })
+    setFormData({ fullName: "", phone: "", conditionType: "", address: "", message: "" })
     setIsSubmitting(false)
   }
 
@@ -161,11 +162,6 @@ export function ContactSection() {
             >
             Contactez-nous
             </motion.h2>
-
-            <AnimatedText 
-              text="Nous sommes là pour vous écouter et vous accompagner. Votre enfant mérite le meilleur."
-              className="text-xl text-gray-600 max-w-3xl mx-auto"
-            />
           </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
@@ -304,6 +300,49 @@ export function ContactSection() {
               transition={{ duration: 0.8, delay: 0.8, type: "spring", stiffness: 100 }}
             >
             <form onSubmit={handleSubmit} className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl space-y-6 relative overflow-hidden group">
+              {/* Decorative Background Elements */}
+              <motion.div
+                className="absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-br from-red-200/30 to-orange-200/30 rounded-full blur-3xl"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.3, 0.5, 0.3],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut" as const,
+                }}
+              />
+              <motion.div
+                className="absolute -bottom-10 -left-10 w-40 h-40 bg-gradient-to-br from-pink-200/30 to-red-200/30 rounded-full blur-3xl"
+                animate={{
+                  scale: [1, 1.3, 1],
+                  opacity: [0.3, 0.5, 0.3],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut" as const,
+                }}
+              />
+
+              {/* Animated Border Gradient */}
+              <motion.div
+                className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 pointer-events-none"
+                style={{
+                  background: "linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(249, 115, 22, 0.3))",
+                  padding: "2px",
+                }}
+                animate={{
+                  backgroundPosition: ["0% 0%", "100% 100%"],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
+
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -342,7 +381,7 @@ export function ContactSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 1.2 }}
                   >
-                <Label htmlFor="conditionType" className="text-gray-700 font-semibold">Type de condition</Label>
+                <Label htmlFor="conditionType" className="text-gray-700 font-semibold">Type de condition de l'enfant</Label>
                     <Input
                   id="conditionType"
                   value={formData.conditionType}
@@ -374,6 +413,23 @@ export function ContactSection() {
                   initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 1.4 }}
+              >
+                <Label htmlFor="message" className="text-gray-700 font-semibold">Message</Label>
+                <textarea
+                  id="message"
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  required
+                  rows={5}
+                  className="mt-2 w-full px-3 py-2 border border-red-200 rounded-lg focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:outline-none resize-none"
+                  placeholder="Parlez-nous de votre enfant et de vos besoins..."
+                />
+              </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 1.5 }}
               >
                 <Button
                   type="submit"

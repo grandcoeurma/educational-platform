@@ -168,9 +168,9 @@ export function Footer() {
               >
                 <MapPin className="w-5 h-5 text-red-600 flex-shrink-0 mt-1" />
                 <span className="text-sm">
-                  Centre Grand Cœur<br />
-                  123 Avenue de l'Espoir<br />
-                  Casablanca, Maroc
+                  Centre grand cœur<br />
+                  Route bouskoura, N°109, 7km sidi Maârouf<br />
+                  Ain chok Casablanca
                 </span>
               </motion.li>
               <motion.li
@@ -178,14 +178,17 @@ export function Footer() {
                 whileHover={{ x: 5 }}
               >
                 <Phone className="w-5 h-5 text-red-600 flex-shrink-0" />
-                <span className="text-sm">+212 5 22 XX XX XX</span>
+                <div className="text-sm">
+                  <div>0522 10 32 99</div>
+                  <div>0661 98 73 99</div>
+                </div>
               </motion.li>
               <motion.li
                 className="flex items-center gap-3"
                 whileHover={{ x: 5 }}
               >
                 <Mail className="w-5 h-5 text-red-600 flex-shrink-0" />
-                <span className="text-sm">contact@grandcoeur.ma</span>
+                <span className="text-sm">contact@centregrandcoeur.com</span>
               </motion.li>
             </ul>
           </motion.div>
