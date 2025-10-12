@@ -33,7 +33,7 @@ export function ProgramsSection() {
       scale: 1,
       transition: {
         duration: 0.3,
-        ease: "easeOut"
+        ease: "easeOut" as const
       }
     }
   }
@@ -147,10 +147,10 @@ export function ProgramsSection() {
         ))}
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="relative z-10">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-16 container mx-auto px-4"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
@@ -164,161 +164,253 @@ export function ProgramsSection() {
             Nos Programmes et Activités
           </motion.h2>
 
-                  <AnimatedText 
-                    text="Chaque programme est conçu avec amour pour accompagner votre enfant dans son épanouissement unique"
-                    className="text-xl text-gray-600 max-w-3xl mx-auto"
-                  />
+          <AnimatedText 
+            text="Chaque programme est conçu avec amour pour accompagner votre enfant dans son épanouissement unique"
+            className="text-xl text-gray-600 max-w-3xl mx-auto"
+          />
         </motion.div>
 
-        {/* Programs Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-8 mb-16">
-          {programs.map((program, index) => (
+        {/* Horizontal Scrolling Carousel - Train Animation */}
+        <div className="relative overflow-hidden py-8">
+          {/* Gradient Overlays for fade effect */}
+          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-red-50 to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-yellow-50 to-transparent z-10 pointer-events-none" />
+          
+          {/* First track (moving left) */}
+          <motion.div
+            className="flex gap-6 mb-6"
+            animate={{
+              x: [0, -2400],
+            }}
+            transition={{
+              x: {
+                duration: 40,
+                repeat: Infinity,
+                ease: "linear",
+              },
+            }}
+          >
+            {/* Duplicate programs twice for seamless loop */}
+            {[...programs, ...programs].map((program, index) => (
+              <motion.div
+                key={`track1-${index}`}
+                className="group relative flex-shrink-0 w-[350px] md:w-[420px]"
+                whileHover={{ 
+                  scale: 1.05,
+                  y: -10,
+                  transition: { duration: 0.3 }
+                }}
+              >
+                <div className={`relative bg-gradient-to-br ${program.bgColor} p-8 rounded-[32px] shadow-xl hover:shadow-2xl transition-all overflow-hidden h-full border-2 border-white/50`}>
+                  {/* Background Glow Effect */}
+                  <motion.div 
+                    className={`absolute inset-0 bg-gradient-to-br ${program.color} opacity-0 group-hover:opacity-15 transition-opacity duration-500`}
+                  />
+                  
+                  {/* Animated gradient border */}
+                  <motion.div
+                    className="absolute inset-0 rounded-[32px] opacity-0 group-hover:opacity-100"
+                    style={{
+                      background: "linear-gradient(45deg, transparent, rgba(239, 68, 68, 0.3), transparent)",
+                      backgroundSize: "200% 200%",
+                    }}
+                    animate={{
+                      backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  />
+                  
+                  <div className="relative z-10">
+                    {/* Icon */}
                     <motion.div
-                      key={program.title}
-                      className="group relative"
-                      initial={{ opacity: 0, y: 50, rotateX: -15 }}
-                      animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-                      transition={{ duration: 0.6, delay: 0.6 + index * 0.1, type: "spring", stiffness: 100 }}
+                      className={`relative w-20 h-20 bg-gradient-to-br ${program.color} rounded-[24px] flex items-center justify-center mb-6 shadow-2xl`}
+                      whileHover={{ 
+                        rotate: [0, -10, 10, 0],
+                        scale: 1.15,
+                        transition: { duration: 0.5 }
+                      }}
                     >
+                      <program.icon className="w-10 h-10 text-white" strokeWidth={2.5} />
+                      
+                      {/* Pulsing ring */}
                       <motion.div
-                        className={`relative bg-gradient-to-br ${program.bgColor} p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all overflow-hidden`}
-                        whileHover={{ 
-                          y: -15, 
-                          scale: 1.03,
-                          rotateX: 5,
-                          transition: { duration: 0.3 }
+                        className="absolute inset-0 rounded-[24px] border-3 border-red-300"
+                        animate={{
+                          scale: [1, 1.2, 1],
+                          opacity: [0.6, 0, 0.6]
                         }}
-                        transition={{ duration: 0.3 }}
-                      >
-                {/* Background Glow Effect */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${program.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-                
-                        {/* Icon */}
-                        <motion.div
-                          className={`relative w-16 h-16 bg-gradient-to-br ${program.color} rounded-2xl flex items-center justify-center mb-6 shadow-lg`}
-                          whileHover={{ 
-                            rotate: 360, 
-                            scale: 1.2,
-                            transition: { duration: 0.6 }
-                          }}
-                          animate={{
-                            boxShadow: [
-                              "0 10px 30px rgba(229, 62, 62, 0.3)",
-                              "0 20px 40px rgba(229, 62, 62, 0.5)",
-                              "0 10px 30px rgba(229, 62, 62, 0.3)"
-                            ]
-                          }}
-                          transition={{
-                            boxShadow: {
-                              duration: 2,
-                              repeat: Infinity,
-                              ease: "easeInOut"
-                            }
-                          }}
-                        >
-                          <program.icon className="w-8 h-8 text-white" />
-                          {/* Pulsing ring */}
-                          <motion.div
-                            className="absolute inset-0 rounded-2xl border-2 border-red-300"
-                            animate={{
-                              scale: [1, 1.3, 1],
-                              opacity: [0.5, 0, 0.5]
-                            }}
-                            transition={{
-                              duration: 2,
-                              repeat: Infinity,
-                              ease: "easeInOut"
-                            }}
-                          />
-                        </motion.div>
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      />
+                    </motion.div>
 
-                        {/* Content */}
-                        <motion.h3 
-                          className="text-xl font-bold text-gray-800 mb-3 leading-tight"
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={isInView ? { opacity: 1, y: 0 } : {}}
-                          transition={{ delay: 0.8 + index * 0.1 }}
-                        >
-                          {program.title}
-                        </motion.h3>
-                        <motion.p 
-                          className="text-gray-600 text-sm leading-relaxed"
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={isInView ? { opacity: 1, y: 0 } : {}}
-                          transition={{ delay: 1.0 + index * 0.1 }}
-                        >
-                          {program.description}
-                        </motion.p>
+                    {/* Content */}
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 leading-tight">
+                      {program.title}
+                    </h3>
+                    <p className="text-gray-700 text-sm md:text-base leading-relaxed line-clamp-6">
+                      {program.description}
+                    </p>
 
-                        {/* Floating Sparkle */}
-                        <motion.div
-                          className="absolute top-4 right-4 text-2xl opacity-0 group-hover:opacity-100"
-                          animate={{
-                            y: [0, -10, 0],
-                            rotate: [0, 180, 360],
-                            scale: [1, 1.2, 1],
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
-                        >
-                          ✨
-                        </motion.div>
-
-                        {/* Animated border */}
-                        <motion.div
-                          className="absolute inset-0 rounded-3xl border-2 border-transparent bg-gradient-to-r from-red-400/20 to-red-600/20 opacity-0 group-hover:opacity-100"
-                          animate={{
-                            background: [
-                              "linear-gradient(45deg, rgba(229, 62, 62, 0.2), rgba(197, 48, 48, 0.2))",
-                              "linear-gradient(225deg, rgba(197, 48, 48, 0.2), rgba(229, 62, 62, 0.2))",
-                              "linear-gradient(45deg, rgba(229, 62, 62, 0.2), rgba(197, 48, 48, 0.2))"
-                            ]
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                          }}
-                        />
+                    {/* Floating Sparkle */}
+                    <motion.div
+                      className="absolute top-6 right-6 text-3xl opacity-0 group-hover:opacity-100"
+                      animate={{
+                        y: [0, -8, 0],
+                        rotate: [0, 180, 360],
+                        scale: [1, 1.3, 1],
+                      }}
+                      transition={{
+                        duration: 2.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      ✨
+                    </motion.div>
+                  </div>
+                </div>
               </motion.div>
-            </motion.div>
-          ))}
+            ))}
+          </motion.div>
+
+          {/* Second track (moving right) - offset for visual variety */}
+          <motion.div
+            className="flex gap-6"
+            animate={{
+              x: [-2400, 0],
+            }}
+            transition={{
+              x: {
+                duration: 45,
+                repeat: Infinity,
+                ease: "linear",
+              },
+            }}
+          >
+            {/* Duplicate programs twice for seamless loop, reversed order */}
+            {[...programs.slice().reverse(), ...programs.slice().reverse()].map((program, index) => (
+              <motion.div
+                key={`track2-${index}`}
+                className="group relative flex-shrink-0 w-[350px] md:w-[420px]"
+                whileHover={{ 
+                  scale: 1.05,
+                  y: -10,
+                  transition: { duration: 0.3 }
+                }}
+              >
+                <div className={`relative bg-gradient-to-br ${program.bgColor} p-8 rounded-[32px] shadow-xl hover:shadow-2xl transition-all overflow-hidden h-full border-2 border-white/50`}>
+                  {/* Background Glow Effect */}
+                  <motion.div 
+                    className={`absolute inset-0 bg-gradient-to-br ${program.color} opacity-0 group-hover:opacity-15 transition-opacity duration-500`}
+                  />
+                  
+                  {/* Animated gradient border */}
+                  <motion.div
+                    className="absolute inset-0 rounded-[32px] opacity-0 group-hover:opacity-100"
+                    style={{
+                      background: "linear-gradient(225deg, transparent, rgba(239, 68, 68, 0.3), transparent)",
+                      backgroundSize: "200% 200%",
+                    }}
+                    animate={{
+                      backgroundPosition: ["100% 50%", "0% 50%", "100% 50%"],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  />
+                  
+                  <div className="relative z-10">
+                    {/* Icon */}
+                    <motion.div
+                      className={`relative w-20 h-20 bg-gradient-to-br ${program.color} rounded-[24px] flex items-center justify-center mb-6 shadow-2xl`}
+                      whileHover={{ 
+                        rotate: [0, 10, -10, 0],
+                        scale: 1.15,
+                        transition: { duration: 0.5 }
+                      }}
+                    >
+                      <program.icon className="w-10 h-10 text-white" strokeWidth={2.5} />
+                      
+                      {/* Pulsing ring */}
+                      <motion.div
+                        className="absolute inset-0 rounded-[24px] border-3 border-red-300"
+                        animate={{
+                          scale: [1, 1.2, 1],
+                          opacity: [0.6, 0, 0.6]
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: 0.5,
+                        }}
+                      />
+                    </motion.div>
+
+                    {/* Content */}
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 leading-tight">
+                      {program.title}
+                    </h3>
+                    <p className="text-gray-700 text-sm md:text-base leading-relaxed line-clamp-6">
+                      {program.description}
+                    </p>
+
+                    {/* Floating Heart */}
+                    <motion.div
+                      className="absolute top-6 right-6 text-3xl opacity-0 group-hover:opacity-100"
+                      animate={{
+                        y: [0, -8, 0],
+                        scale: [1, 1.3, 1],
+                      }}
+                      transition={{
+                        duration: 2.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: 0.5,
+                      }}
+                    >
+                      ❤️
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
 
-        {/* Bottom Info Card */}
+        {/* Bottom Info Badge */}
         <motion.div
-          className="max-w-4xl mx-auto bg-white/80 backdrop-blur-sm rounded-3xl p-10 shadow-2xl"
-          initial={{ opacity: 0, y: 50 }}
+          className="text-center mt-12 container mx-auto px-4"
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1.4 }}
-          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.8, delay: 1 }}
         >
-          <div className="text-center">
+          <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-red-50 to-orange-50 rounded-full border border-red-100 shadow-md">
             <motion.div
-              className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-700 rounded-full flex items-center justify-center mx-auto mb-6"
               animate={{
-                scale: [1, 1.1, 1],
+                rotate: [0, 360],
               }}
               transition={{
-                duration: 2,
+                duration: 3,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: "linear",
               }}
             >
-              <Heart className="w-10 h-10 text-white" fill="currentColor" />
+              ✨
             </motion.div>
-            
-            <h3 className="text-3xl font-bold text-gray-800 mb-4">
-              Une Approche Holistique et Bienveillante
-            </h3>
-            
-                    <AnimatedText 
-                      text="Nos programmes s'appuient sur une équipe pluridisciplinaire d'éducateurs spécialisés, d'orthophonistes, de psychomotriciens et de thérapeutes. Chaque activité est pensée pour créer un environnement où votre enfant peut grandir en confiance et révéler tout son potentiel."
-                      className="text-lg text-gray-600 leading-relaxed"
-                    />
+            <span className="text-sm font-semibold text-gray-800">
+              Survolez les cartes pour voir les animations
+            </span>
           </div>
         </motion.div>
       </div>
