@@ -1,13 +1,27 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useMotionValue, useAnimation, PanInfo } from "framer-motion"
 import { useInView } from "framer-motion"
-import { useRef } from "react"
-import { Heart, Music, Palette, Activity, Brain, BookOpen, Users, MessageCircle } from "lucide-react"
+import { useRef, useState, useEffect } from "react"
+import { Heart, Music, Palette, Activity, Brain, BookOpen, Users, MessageCircle, ChevronLeft, ChevronRight } from "lucide-react"
 
 export function ProgramsSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.2 })
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true)
+  const x = useMotionValue(0)
+  const controls = useAnimation()
+  const constraintsRef = useRef<HTMLDivElement>(null)
+
+  // Handle infinite loop when reaching the end
+  useEffect(() => {
+    const unsubscribe = x.on("change", (latest) => {
+      if (latest <= -2400 && isAutoScrolling) {
+        x.set(0)
+      }
+    })
+    return () => unsubscribe()
+  }, [x, isAutoScrolling])
 
   // Word-by-word animation variants
   const containerVariants = {
@@ -170,25 +184,83 @@ export function ProgramsSection() {
           />
         </motion.div>
 
-        {/* Horizontal Scrolling Carousel - Train Animation (Right to Left) */}
+        {/* Horizontal Scrolling Carousel - Train Animation with Manual Controls */}
         <div className="relative overflow-hidden py-8">
           {/* Gradient Overlays for fade effect */}
           <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-red-50 to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-yellow-50 to-transparent z-10 pointer-events-none" />
           
-          {/* Single track moving from right to left */}
+          {/* Navigation Arrows */}
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 z-20">
+            <motion.button
+              onClick={() => {
+                setIsAutoScrolling(false)
+                const currentX = x.get()
+                controls.start({
+                  x: currentX + 450,
+                  transition: { duration: 0.5, ease: "easeOut" as const }
+                })
+              }}
+              className="group bg-white hover:bg-red-50 p-4 rounded-full shadow-xl border-2 border-red-200 hover:border-red-400 transition-all"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ChevronLeft className="w-6 h-6 text-red-600 group-hover:text-red-700" strokeWidth={3} />
+            </motion.button>
+          </div>
+
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20">
+            <motion.button
+              onClick={() => {
+                setIsAutoScrolling(false)
+                const currentX = x.get()
+                controls.start({
+                  x: currentX - 450,
+                  transition: { duration: 0.5, ease: "easeOut" as const }
+                })
+              }}
+              className="group bg-white hover:bg-red-50 p-4 rounded-full shadow-xl border-2 border-red-200 hover:border-red-400 transition-all"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ChevronRight className="w-6 h-6 text-red-600 group-hover:text-red-700" strokeWidth={3} />
+            </motion.button>
+          </div>
+          
+          {/* Draggable track moving from right to left */}
           <motion.div
-            className="flex gap-6"
-            animate={{
-              x: [0, -2400],
+            ref={constraintsRef}
+            className="flex gap-6 cursor-grab active:cursor-grabbing"
+            style={{ x }}
+            drag="x"
+            dragConstraints={{ left: -2400, right: 0 }}
+            dragElastic={0.1}
+            onDragStart={() => setIsAutoScrolling(false)}
+            onDragEnd={(event, info: PanInfo) => {
+              // Resume auto-scroll after drag with current position
+              const currentX = x.get()
+              setIsAutoScrolling(true)
+              controls.start({
+                x: [currentX, -2400],
+                transition: {
+                  duration: (2400 + currentX) / 60, // Adjust duration based on remaining distance
+                  repeat: Infinity,
+                  ease: "linear",
+                  repeatType: "loop",
+                }
+              })
             }}
-            transition={{
+            animate={isAutoScrolling ? {
+              x: [0, -2400],
+            } : controls}
+            transition={isAutoScrolling ? {
               x: {
                 duration: 40,
                 repeat: Infinity,
                 ease: "linear",
+                repeatType: "loop",
               },
-            }}
+            } : {}}
           >
             {/* Duplicate programs twice for seamless loop */}
             {[...programs, ...programs].map((program, index) => (
@@ -281,32 +353,6 @@ export function ProgramsSection() {
             ))}
           </motion.div>
         </div>
-
-        {/* Bottom Info Badge */}
-        <motion.div
-          className="text-center mt-12 container mx-auto px-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1 }}
-        >
-          <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-red-50 to-orange-50 rounded-full border border-red-100 shadow-md">
-            <motion.div
-              animate={{
-                rotate: [0, 360],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            >
-              ✨
-            </motion.div>
-            <span className="text-sm font-semibold text-gray-800">
-              Survolez les cartes pour voir les animations
-            </span>
-          </div>
-        </motion.div>
       </div>
     </section>
   )
