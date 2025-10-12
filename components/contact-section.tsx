@@ -103,7 +103,7 @@ export function ContactSection() {
   ]
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 relative overflow-hidden" ref={ref}>
+    <section id="contact" className="py-6 bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 relative overflow-hidden" ref={ref}>
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(6)].map((_, i) => (
@@ -133,27 +133,11 @@ export function ContactSection() {
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-6"
             initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
         >
-          <motion.div
-            className="inline-block mb-6"
-            animate={{
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-700 rounded-full flex items-center justify-center mx-auto shadow-2xl">
-              <Heart className="w-10 h-10 text-white" fill="currentColor" />
-            </div>
-          </motion.div>
-
             <motion.h2 
             className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent"
               initial={{ opacity: 0, y: 20 }}
@@ -162,6 +146,11 @@ export function ContactSection() {
             >
             Contactez-nous
             </motion.h2>
+
+            <AnimatedText 
+              text="Nous sommes là pour vous écouter et vous accompagner. Votre enfant mérite le meilleur."
+              className="text-xl text-gray-600 max-w-3xl mx-auto"
+            />
           </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
@@ -170,7 +159,7 @@ export function ContactSection() {
               initial={{ opacity: 0, x: -50, rotateY: -15 }}
             animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.6, type: "spring", stiffness: 100 }}
-            className="space-y-8"
+            className="space-y-4"
           >
             {/* Info Cards */}
             {contactInfo.map((info, index) => (
@@ -323,23 +312,6 @@ export function ContactSection() {
                   duration: 5,
                   repeat: Infinity,
                   ease: "easeInOut" as const,
-                }}
-              />
-
-              {/* Animated Border Gradient */}
-              <motion.div
-                className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 pointer-events-none"
-                style={{
-                  background: "linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(249, 115, 22, 0.3))",
-                  padding: "2px",
-                }}
-                animate={{
-                  backgroundPosition: ["0% 0%", "100% 100%"],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "linear",
                 }}
               />
 

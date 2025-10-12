@@ -76,7 +76,7 @@ export function HeroSection() {
     const timer = setInterval(() => {
       setDirection(1);
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 4000);
+    }, 8000);
 
     return () => clearInterval(timer);
   }, []);

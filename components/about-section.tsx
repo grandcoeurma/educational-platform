@@ -172,7 +172,7 @@ export function AboutSection() {
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="space-y-8 relative"
+            className="space-y-8 relative order-2 md:order-1"
           >
             {/* Decorative Vector Strokes Around Text */}
             {/* Top Left Curved Stroke */}
@@ -397,7 +397,7 @@ export function AboutSection() {
 
           {/* Image Gallery - Organic Wavy Shape Design */}
           <motion.div
-            className="relative"
+            className="relative order-1 md:order-2"
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.5 }}
