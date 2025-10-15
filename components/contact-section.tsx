@@ -357,7 +357,7 @@ export function ContactSection() {
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                       required
                   className="mt-2 border-red-200 focus:border-red-500 focus:ring-red-500"
-                  placeholder="Votre nom complet"
+                  placeholder="Votre nom"
                     />
                   </motion.div>
 
@@ -407,7 +407,7 @@ export function ContactSection() {
                     required
                   rows={3}
                   className="mt-2 w-full px-3 py-2 border border-red-200 rounded-lg focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:outline-none resize-none"
-                  placeholder="Votre adresse complète"
+                  placeholder="Votre adresse"
                   />
                 </motion.div>
 
