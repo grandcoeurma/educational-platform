@@ -508,7 +508,7 @@ export function DailyLifeSection() {
                 >
                   <div className="relative aspect-[4/3]">
                     <Image
-                      src="/who-are-we.jpg"
+                      src="/la-vie.jpg"
                       alt="La vie quotidienne à Grand Cœur"
                       fill
                       className="object-cover"
