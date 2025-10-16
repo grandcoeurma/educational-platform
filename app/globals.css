@@ -218,3 +218,53 @@ nav button:focus-visible {
   outline-offset: 2px;
   border-radius: 0.5rem;
 }
+
+/* ========================================
+   MOBILE: Disable text appearance animations only
+   - DO NOT change `display` (keeps inline wrapping)
+   - Only disables animations/transitions/opacity/transform
+   ======================================== */
+@media (max-width: 768px) {
+  /* Common animation classes (extend if you have others) */
+  .animate,
+  .animated,
+  .fade-in,
+  .fade-up,
+  .fade-down,
+  .slide-in,
+  .text-anim,
+  .typing,
+  [data-animate],
+  [data-aos],
+  [class*="animate-"],
+  [class*="fade-"],
+  [class*="slide-"] {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+
+  /* Inline elements that were hidden via inline styles: make visible but don't force block */
+  [style*="opacity: 0"] {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  [style*="transform:"] {
+    transform: none !important;
+  }
+
+  /* Framer Motion specific elements - don't change display
+     (we only remove animations and ensure visibility) */
+  [data-projection-id],
+  [data-framer-component-type],
+  .framer-motion {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+}
