@@ -509,39 +509,35 @@ export function ProgramsSection() {
           <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-yellow-50 to-transparent z-10 pointer-events-none" />
           
           {/* Navigation Arrows */}
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 z-20">
+          <div className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20">
             <motion.button
               onClick={() => {
                 setIsAutoScrolling(false)
                 const currentX = x.get()
-                controls.start({
-                  x: currentX + 450,
-                  transition: { duration: 0.5, ease: "easeOut" as const }
-                })
+                const newX = Math.min(currentX + 450, 0) // Don't go beyond 0
+                x.set(newX)
               }}
-              className="group bg-white hover:bg-red-50 p-4 rounded-full shadow-xl border-2 border-red-200 hover:border-red-400 transition-all"
+              className="group bg-white hover:bg-red-50 p-2 md:p-4 rounded-full shadow-xl border-2 border-red-200 hover:border-red-400 transition-all"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
-              <ChevronLeft className="w-6 h-6 text-red-600 group-hover:text-red-700" strokeWidth={3} />
+              <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-red-600 group-hover:text-red-700" strokeWidth={3} />
             </motion.button>
           </div>
 
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20">
+          <div className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20">
             <motion.button
               onClick={() => {
                 setIsAutoScrolling(false)
                 const currentX = x.get()
-                controls.start({
-                  x: currentX - 450,
-                  transition: { duration: 0.5, ease: "easeOut" as const }
-                })
+                const newX = Math.max(currentX - 450, -2400) // Don't go beyond -2400
+                x.set(newX)
               }}
-              className="group bg-white hover:bg-red-50 p-4 rounded-full shadow-xl border-2 border-red-200 hover:border-red-400 transition-all"
+              className="group bg-white hover:bg-red-50 p-2 md:p-4 rounded-full shadow-xl border-2 border-red-200 hover:border-red-400 transition-all"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
-              <ChevronRight className="w-6 h-6 text-red-600 group-hover:text-red-700" strokeWidth={3} />
+              <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-red-600 group-hover:text-red-700" strokeWidth={3} />
             </motion.button>
           </div>
           
