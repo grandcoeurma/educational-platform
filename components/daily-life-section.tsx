@@ -656,7 +656,7 @@ export function DailyLifeSection() {
 
               {/* Playful floating badge with warm colors */}
               <motion.div
-                className="absolute -top-12 -right-12 bg-white rounded-[32px] px-6 py-4 shadow-2xl border-2 border-orange-200 z-30"
+                className="absolute -top-6 -right-2 md:-top-12 md:-right-12 bg-white rounded-[32px] px-4 py-3 md:px-6 md:py-4 shadow-2xl border-2 border-orange-200 z-30"
                 initial={{ opacity: 0, scale: 0, rotate: 180 }}
                 animate={isInView ? { 
                   opacity: 1, 
@@ -677,9 +677,9 @@ export function DailyLifeSection() {
                   transition: { duration: 0.3, y: { duration: 0.3 } }
                 }}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 md:gap-3">
                   <motion.div 
-                    className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg"
+                    className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg"
                     animate={{
                       rotate: [0, 5, -5, 0],
                     }}
@@ -689,10 +689,10 @@ export function DailyLifeSection() {
                       ease: "easeInOut",
                     }}
                   >
-                    <Heart className="w-6 h-6 text-white" fill="currentColor" />
+                    <Heart className="w-5 h-5 md:w-6 md:h-6 text-white" fill="currentColor" />
                   </motion.div>
                   <div>
-                    <div className="text-lg font-bold text-gray-800">Avec amour</div>
+                    <div className="text-base md:text-lg font-bold text-gray-800">Avec amour</div>
                     <div className="text-xs text-gray-600">Chaque jour</div>
                   </div>
                 </div>
