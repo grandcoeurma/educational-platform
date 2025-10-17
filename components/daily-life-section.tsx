@@ -536,7 +536,7 @@ export function DailyLifeSection() {
 
               {/* Large orange circle (bottom-right) */}
               <motion.div
-                className="absolute -bottom-12 right-12 w-48 h-48 border-[16px] border-orange-500 rounded-full z-20"
+                className="absolute -bottom-12 right-12 w-24 h-24 md:w-48 md:h-48 border-[8px] md:border-[16px] border-orange-500 rounded-full z-20"
                 initial={{ opacity: 0, scale: 0, rotate: -45 }}
                 animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
                 transition={{ duration: 0.8, delay: 1.6 }}
