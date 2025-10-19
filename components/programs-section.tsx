@@ -2,27 +2,91 @@
 
 import { motion, useMotionValue, useAnimation, PanInfo } from "framer-motion"
 import { useInView } from "framer-motion"
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { Heart, Music, Palette, Activity, Brain, BookOpen, Users, MessageCircle, ChevronLeft, ChevronRight } from "lucide-react"
 
 export function ProgramsSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.2 })
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true)
-  const x = useMotionValue(0)
-  const controls = useAnimation()
-  const constraintsRef = useRef<HTMLDivElement>(null)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [isPaused, setIsPaused] = useState(false)
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Handle infinite loop when reaching the end
+  const CARD_WIDTH = 450 // Approximate card width + gap
+  const TOTAL_CARDS = 8 // Number of program cards
+  const MAX_SCROLL = -(TOTAL_CARDS * CARD_WIDTH)
+
+  // Calculate scroll position based on current index
+  const scrollPosition = -(currentIndex * CARD_WIDTH)
+
+  // Navigate to previous card
+  const goToPrevious = useCallback(() => {
+    setIsAutoPlaying(false)
+    setCurrentIndex((prev) => Math.max(0, prev - 1))
+  }, [])
+
+  // Navigate to next card
+  const goToNext = useCallback(() => {
+    setIsAutoPlaying(false)
+    setCurrentIndex((prev) => Math.min(TOTAL_CARDS - 1, prev + 1))
+  }, [])
+
+  // Auto-play functionality
   useEffect(() => {
-    const unsubscribe = x.on("change", (latest) => {
-      if (latest <= -2400 && isAutoScrolling) {
-        x.set(0)
+    if (!isAutoPlaying || isPaused) {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current)
+        autoPlayRef.current = null
       }
-    })
-    return () => unsubscribe()
-  }, [x, isAutoScrolling])
+      return
+    }
+
+    autoPlayRef.current = setInterval(() => {
+      setCurrentIndex((prev) => {
+        // Loop back to start when reaching the end
+        if (prev >= TOTAL_CARDS - 1) {
+          return 0
+        }
+        return prev + 1
+      })
+    }, 3000) // Auto-advance every 3 seconds
+
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current)
+      }
+    }
+  }, [isAutoPlaying, isPaused])
+
+  // Pause auto-play on user interaction
+  const handleUserInteraction = useCallback(() => {
+    setIsAutoPlaying(false)
+    setIsPaused(true)
+  }, [])
+
+  // Resume auto-play after a delay
+  useEffect(() => {
+    if (isPaused) {
+      const resumeTimer = setTimeout(() => {
+        setIsPaused(false)
+        setIsAutoPlaying(true)
+      }, 5000) // Resume after 5 seconds of inactivity
+
+      return () => clearTimeout(resumeTimer)
+    }
+  }, [isPaused])
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current)
+      }
+    }
+  }, [])
 
   // Word-by-word animation variants
   const containerVariants = {
@@ -511,21 +575,23 @@ export function ProgramsSection() {
           {/* Navigation Arrows */}
           <div className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20">
             <motion.button
-              onClick={async () => {
-                console.log("clickiing on the left zob")
-                setIsAutoScrolling(false)
-                const currentX = x.get()
-                const newX = Math.min(currentX + 450, 0) // Don't go beyond 0
-                // Stop any ongoing animation and animate to new position
-                await controls.start({
-                  x: newX,
-                  transition: { type: "spring", stiffness: 300, damping: 30 }
+              onClick={() => {
+                console.log('⬅️ LEFT ARROW:', {
+                  device: window.innerWidth < 768 ? '📱 MOBILE' : '💻 DESKTOP',
+                  currentIndex,
+                  canGoBack: currentIndex > 0
                 })
+                goToPrevious()
+                handleUserInteraction()
               }}
-              className="group bg-white hover:bg-red-50 p-2 md:p-4 rounded-full shadow-xl border-2 border-red-200 hover:border-red-400 transition-all"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+              disabled={currentIndex === 0}
+              className={`group bg-white hover:bg-red-50 p-2 md:p-4 rounded-full shadow-xl border-2 border-red-200 hover:border-red-400 transition-all ${
+                currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+              }`}
+              whileHover={currentIndex > 0 ? { scale: 1.1 } : {}}
+              whileTap={currentIndex > 0 ? { scale: 0.95 } : {}}
               aria-label="Previous programs"
+              aria-disabled={currentIndex === 0}
             >
               <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-red-600 group-hover:text-red-700" strokeWidth={3} />
             </motion.button>
@@ -533,21 +599,23 @@ export function ProgramsSection() {
 
           <div className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20">
             <motion.button
-              onClick={async () => {
-                console.log("clickiing on the right zob")
-                setIsAutoScrolling(false)
-                const currentX = x.get()
-                const newX = Math.max(currentX - 450, -2400) // Don't go beyond -2400
-                // Stop any ongoing animation and animate to new position
-                await controls.start({
-                  x: newX,
-                  transition: { type: "spring", stiffness: 300, damping: 30 }
+              onClick={() => {
+                console.log('➡️ RIGHT ARROW:', {
+                  device: window.innerWidth < 768 ? '📱 MOBILE' : '💻 DESKTOP',
+                  currentIndex,
+                  canGoForward: currentIndex < TOTAL_CARDS - 1
                 })
+                goToNext()
+                handleUserInteraction()
               }}
-              className="group bg-white hover:bg-red-50 p-2 md:p-4 rounded-full shadow-xl border-2 border-red-200 hover:border-red-400 transition-all"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+              disabled={currentIndex >= TOTAL_CARDS - 1}
+              className={`group bg-white hover:bg-red-50 p-2 md:p-4 rounded-full shadow-xl border-2 border-red-200 hover:border-red-400 transition-all ${
+                currentIndex >= TOTAL_CARDS - 1 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+              }`}
+              whileHover={currentIndex < TOTAL_CARDS - 1 ? { scale: 1.1 } : {}}
+              whileTap={currentIndex < TOTAL_CARDS - 1 ? { scale: 0.95 } : {}}
               aria-label="Next programs"
+              aria-disabled={currentIndex >= TOTAL_CARDS - 1}
             >
               <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-red-600 group-hover:text-red-700" strokeWidth={3} />
             </motion.button>
@@ -555,44 +623,24 @@ export function ProgramsSection() {
           
           {/* Draggable track moving from right to left */}
           <motion.div
-            ref={constraintsRef}
-            className="flex gap-6 cursor-grab active:cursor-grabbing pointer-events-none"
-            style={{ x }}
-            drag="x"
-            dragConstraints={{ left: -2400, right: 0 }}
-            dragElastic={0.1}
-            onDragStart={() => setIsAutoScrolling(false)}
-            onDragEnd={(event, info: PanInfo) => {
-              // Resume auto-scroll after drag with current position
-              const currentX = x.get()
-              setIsAutoScrolling(true)
-              controls.start({
-                x: [currentX, -2400],
-                transition: {
-                  duration: (2400 + currentX) / 60, // Adjust duration based on remaining distance
-                  repeat: Infinity,
-                  ease: "linear",
-                  repeatType: "loop",
-                }
-              })
+            ref={carouselRef}
+            className="flex gap-6"
+            animate={{
+              x: scrollPosition
             }}
-            animate={isAutoScrolling ? {
-              x: [0, -2400],
-            } : controls}
-            transition={isAutoScrolling ? {
-              x: {
-                duration: 40,
-                repeat: Infinity,
-                ease: "linear",
-                repeatType: "loop",
-              },
-            } : {}}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 30
+            }}
+            onMouseEnter={handleUserInteraction}
+            onTouchStart={handleUserInteraction}
           >
-            {/* Duplicate programs twice for seamless loop */}
-            {[...programs, ...programs].map((program, index) => (
+            {/* Render programs once (no duplication needed) */}
+            {programs.map((program, index) => (
               <motion.div
                 key={`program-${index}`}
-                className="group relative flex-shrink-0 w-[350px] md:w-[420px] pointer-events-auto"
+                className="group relative flex-shrink-0 w-[350px] md:w-[420px]"
                 whileHover={{ 
                   scale: 1.05,
                   y: -10,
