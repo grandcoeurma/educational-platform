@@ -511,15 +511,20 @@ export function ProgramsSection() {
           {/* Navigation Arrows */}
           <div className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20">
             <motion.button
-              onClick={() => {
+              onClick={async () => {
                 setIsAutoScrolling(false)
                 const currentX = x.get()
                 const newX = Math.min(currentX + 450, 0) // Don't go beyond 0
-                x.set(newX)
+                // Stop any ongoing animation and animate to new position
+                await controls.start({
+                  x: newX,
+                  transition: { type: "spring", stiffness: 300, damping: 30 }
+                })
               }}
               className="group bg-white hover:bg-red-50 p-2 md:p-4 rounded-full shadow-xl border-2 border-red-200 hover:border-red-400 transition-all"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
+              aria-label="Previous programs"
             >
               <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-red-600 group-hover:text-red-700" strokeWidth={3} />
             </motion.button>
@@ -527,15 +532,20 @@ export function ProgramsSection() {
 
           <div className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20">
             <motion.button
-              onClick={() => {
+              onClick={async () => {
                 setIsAutoScrolling(false)
                 const currentX = x.get()
                 const newX = Math.max(currentX - 450, -2400) // Don't go beyond -2400
-                x.set(newX)
+                // Stop any ongoing animation and animate to new position
+                await controls.start({
+                  x: newX,
+                  transition: { type: "spring", stiffness: 300, damping: 30 }
+                })
               }}
               className="group bg-white hover:bg-red-50 p-2 md:p-4 rounded-full shadow-xl border-2 border-red-200 hover:border-red-400 transition-all"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
+              aria-label="Next programs"
             >
               <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-red-600 group-hover:text-red-700" strokeWidth={3} />
             </motion.button>
