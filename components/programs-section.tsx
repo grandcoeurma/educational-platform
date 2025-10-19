@@ -5,6 +5,15 @@ import { useInView } from "framer-motion"
 import { useRef, useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { Heart, Music, Palette, Activity, Brain, BookOpen, Users, MessageCircle, ChevronLeft, ChevronRight } from "lucide-react"
+import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 export function ProgramsSection() {
   const ref = useRef(null)
@@ -23,16 +32,16 @@ export function ProgramsSection() {
   const scrollPosition = -(currentIndex * CARD_WIDTH)
 
   // Navigate to previous card
-  const goToPrevious = useCallback(() => {
+  const goToPrevious = () => {
     setIsAutoPlaying(false)
     setCurrentIndex((prev) => Math.max(0, prev - 1))
-  }, [])
+  }
 
   // Navigate to next card
-  const goToNext = useCallback(() => {
+  const goToNext = () => {
     setIsAutoPlaying(false)
     setCurrentIndex((prev) => Math.min(TOTAL_CARDS - 1, prev + 1))
-  }, [])
+  }
 
   // Auto-play functionality
   useEffect(() => {
@@ -64,7 +73,7 @@ export function ProgramsSection() {
   // Pause auto-play on user interaction
   const handleUserInteraction = useCallback(() => {
     setIsAutoPlaying(false)
-    setIsPaused(true)
+    // setIsPaused(true)
   }, [])
 
   // Resume auto-play after a delay
@@ -569,75 +578,20 @@ export function ProgramsSection() {
         {/* Horizontal Scrolling Carousel - Train Animation with Manual Controls */}
         <div className="relative overflow-hidden py-8">
           {/* Gradient Overlays for fade effect */}
-          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-red-50 to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-yellow-50 to-transparent z-10 pointer-events-none" />
-          
-          {/* Navigation Arrows */}
-          <div className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20">
-            <motion.button
-              onClick={() => {
-                console.log('⬅️ LEFT ARROW:', {
-                  device: window.innerWidth < 768 ? '📱 MOBILE' : '💻 DESKTOP',
-                  currentIndex,
-                  canGoBack: currentIndex > 0
-                })
-                goToPrevious()
-                handleUserInteraction()
-              }}
-              disabled={currentIndex === 0}
-              className={`group bg-white hover:bg-red-50 p-2 md:p-4 rounded-full shadow-xl border-2 border-red-200 hover:border-red-400 transition-all ${
-                currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
-              }`}
-              whileHover={currentIndex > 0 ? { scale: 1.1 } : {}}
-              whileTap={currentIndex > 0 ? { scale: 0.95 } : {}}
-              aria-label="Previous programs"
-              aria-disabled={currentIndex === 0}
-            >
-              <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-red-600 group-hover:text-red-700" strokeWidth={3} />
-            </motion.button>
-          </div>
+		  <Swiper
+			cssMode={true}
+			navigation={true}
+			slidesPerView={window.innerWidth < 700 ? 1 : 3}
+			spaceBetween={40}
+			centeredSlides={true}
+			mousewheel={true}
+			keyboard={true}
+			modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+			className="mySwiper"
+		>
+		 {programs.map((program, index) => (
+			<SwiperSlide key={`program-${index}`} className="!w-[400px]">
 
-          <div className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20">
-            <motion.button
-              onClick={() => {
-                console.log('➡️ RIGHT ARROW:', {
-                  device: window.innerWidth < 768 ? '📱 MOBILE' : '💻 DESKTOP',
-                  currentIndex,
-                  canGoForward: currentIndex < TOTAL_CARDS - 1
-                })
-                goToNext()
-                handleUserInteraction()
-              }}
-              disabled={currentIndex >= TOTAL_CARDS - 1}
-              className={`group bg-white hover:bg-red-50 p-2 md:p-4 rounded-full shadow-xl border-2 border-red-200 hover:border-red-400 transition-all ${
-                currentIndex >= TOTAL_CARDS - 1 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
-              }`}
-              whileHover={currentIndex < TOTAL_CARDS - 1 ? { scale: 1.1 } : {}}
-              whileTap={currentIndex < TOTAL_CARDS - 1 ? { scale: 0.95 } : {}}
-              aria-label="Next programs"
-              aria-disabled={currentIndex >= TOTAL_CARDS - 1}
-            >
-              <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-red-600 group-hover:text-red-700" strokeWidth={3} />
-            </motion.button>
-          </div>
-          
-          {/* Draggable track moving from right to left */}
-          <motion.div
-            ref={carouselRef}
-            className="flex gap-6"
-            animate={{
-              x: scrollPosition
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 30
-            }}
-            onMouseEnter={handleUserInteraction}
-            onTouchStart={handleUserInteraction}
-          >
-            {/* Render programs once (no duplication needed) */}
-            {programs.map((program, index) => (
               <motion.div
                 key={`program-${index}`}
                 className="group relative flex-shrink-0 w-[350px] md:w-[420px]"
@@ -724,8 +678,10 @@ export function ProgramsSection() {
                   </div>
                 </div>
               </motion.div>
+			</SwiperSlide>
+
             ))}
-          </motion.div>
+      </Swiper>
         </div>
       </div>
     </section>
