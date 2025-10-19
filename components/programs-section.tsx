@@ -512,6 +512,7 @@ export function ProgramsSection() {
           <div className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20">
             <motion.button
               onClick={async () => {
+                console.log("clickiing on the left zob")
                 setIsAutoScrolling(false)
                 const currentX = x.get()
                 const newX = Math.min(currentX + 450, 0) // Don't go beyond 0
@@ -533,6 +534,7 @@ export function ProgramsSection() {
           <div className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20">
             <motion.button
               onClick={async () => {
+                console.log("clickiing on the right zob")
                 setIsAutoScrolling(false)
                 const currentX = x.get()
                 const newX = Math.max(currentX - 450, -2400) // Don't go beyond -2400
@@ -554,7 +556,7 @@ export function ProgramsSection() {
           {/* Draggable track moving from right to left */}
           <motion.div
             ref={constraintsRef}
-            className="flex gap-6 cursor-grab active:cursor-grabbing"
+            className="flex gap-6 cursor-grab active:cursor-grabbing pointer-events-none"
             style={{ x }}
             drag="x"
             dragConstraints={{ left: -2400, right: 0 }}
@@ -590,7 +592,7 @@ export function ProgramsSection() {
             {[...programs, ...programs].map((program, index) => (
               <motion.div
                 key={`program-${index}`}
-                className="group relative flex-shrink-0 w-[350px] md:w-[420px]"
+                className="group relative flex-shrink-0 w-[350px] md:w-[420px] pointer-events-auto"
                 whileHover={{ 
                   scale: 1.05,
                   y: -10,
