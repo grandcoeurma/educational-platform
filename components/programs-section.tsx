@@ -709,6 +709,323 @@ export function ProgramsSection() {
             </motion.button>
           </div>
         </div>
+
+        {/* Additional Image Gallery Below Cards */}
+        <div className="container mx-auto px-4 mt-20">
+          <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+            {/* Activite New 1 Image */}
+            <motion.div
+              className="relative h-[350px] md:h-[400px]"
+              initial={{ opacity: 0, y: 50, rotateY: -15 }}
+              animate={isInView ? { opacity: 1, y: 0, rotateY: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              {/* Floating background shapes */}
+              <motion.div
+                className="absolute -top-8 -left-8 w-32 h-32 bg-gradient-to-br from-green-300/30 to-emerald-500/30 rounded-[60%_40%_50%_50%/70%_30%_70%_30%] blur-2xl"
+                animate={{
+                  scale: [1, 1.15, 1],
+                  rotate: [0, 90, 0],
+                  borderRadius: [
+                    "60% 40% 50% 50% / 70% 30% 70% 30%",
+                    "50% 50% 40% 60% / 30% 70% 30% 70%",
+                    "60% 40% 50% 50% / 70% 30% 70% 30%"
+                  ],
+                }}
+                transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {/* Main Image Container */}
+              <motion.div
+                className="relative w-full h-full"
+                whileHover={{ scale: 1.05, rotate: 2 }}
+                transition={{ duration: 0.4, type: "spring", stiffness: 150 }}
+              >
+                {/* Organic SVG Mask */}
+                <div className="absolute inset-0" style={{ clipPath: "url(#activite1Shape)" }}>
+                  <svg width="0" height="0">
+                    <defs>
+                      <clipPath id="activite1Shape" clipPathUnits="objectBoundingBox">
+                        <motion.path
+                          d="M 0.12,0.08 Q 0.48,0.02 0.78,0.12 T 0.93,0.32 Q 0.98,0.55 0.87,0.78 T 0.65,0.95 Q 0.35,1 0.15,0.85 T 0.07,0.58 Q 0.03,0.32 0.12,0.08 Z"
+                          animate={{
+                            d: [
+                              "M 0.12,0.08 Q 0.48,0.02 0.78,0.12 T 0.93,0.32 Q 0.98,0.55 0.87,0.78 T 0.65,0.95 Q 0.35,1 0.15,0.85 T 0.07,0.58 Q 0.03,0.32 0.12,0.08 Z",
+                              "M 0.08,0.12 Q 0.42,0.05 0.75,0.15 T 0.95,0.35 Q 0.97,0.58 0.85,0.82 T 0.6,0.92 Q 0.32,0.97 0.18,0.82 T 0.05,0.55 Q 0.02,0.28 0.08,0.12 Z",
+                              "M 0.12,0.08 Q 0.48,0.02 0.78,0.12 T 0.93,0.32 Q 0.98,0.55 0.87,0.78 T 0.65,0.95 Q 0.35,1 0.15,0.85 T 0.07,0.58 Q 0.03,0.32 0.12,0.08 Z"
+                            ]
+                          }}
+                          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                        />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  
+                  <div className="w-full h-full relative">
+                    <Image
+                      src="/activite_new_1.jpg"
+                      alt="Activité 1"
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-emerald-500/5 to-teal-500/10" />
+                  </div>
+                </div>
+
+                {/* Vector Stroke - Top Right */}
+                <motion.svg
+                  className="absolute -top-4 right-1/4 w-32 h-10"
+                  viewBox="0 0 150 40"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 1 }}
+                  transition={{ duration: 1.5, delay: 0.6 }}
+                >
+                  <motion.path
+                    d="M 10,20 Q 50,5 90,20 T 140,20"
+                    stroke="url(#activite1Gradient)"
+                    strokeWidth="5"
+                    fill="none"
+                    strokeLinecap="round"
+                    animate={{
+                      d: [
+                        "M 10,20 Q 50,5 90,20 T 140,20",
+                        "M 10,20 Q 50,30 90,20 T 140,20",
+                        "M 10,20 Q 50,5 90,20 T 140,20"
+                      ]
+                    }}
+                    transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                  <defs>
+                    <linearGradient id="activite1Gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#10b981" />
+                      <stop offset="100%" stopColor="#14b8a6" />
+                    </linearGradient>
+                  </defs>
+                </motion.svg>
+
+                {/* Sparkle decoration */}
+                <motion.div
+                  className="absolute top-4 left-4 text-3xl"
+                  animate={{
+                    rotate: [0, 180, 360],
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  🎨
+                </motion.div>
+              </motion.div>
+            </motion.div>
+
+            {/* Activite New 2 Image */}
+            <motion.div
+              className="relative h-[350px] md:h-[400px]"
+              initial={{ opacity: 0, y: 50 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              {/* Floating background shapes */}
+              <motion.div
+                className="absolute -bottom-8 -right-8 w-40 h-40 bg-gradient-to-br from-yellow-300/30 to-amber-500/30 rounded-[50%_50%_60%_40%/40%_60%_50%_50%] blur-2xl"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  rotate: [0, -120, 0],
+                  borderRadius: [
+                    "50% 50% 60% 40% / 40% 60% 50% 50%",
+                    "40% 60% 50% 50% / 50% 50% 60% 40%",
+                    "50% 50% 60% 40% / 40% 60% 50% 50%"
+                  ],
+                }}
+                transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {/* Main Image Container */}
+              <motion.div
+                className="relative w-full h-full"
+                whileHover={{ scale: 1.05, rotate: -2 }}
+                transition={{ duration: 0.4, type: "spring", stiffness: 150 }}
+              >
+                {/* Organic SVG Mask */}
+                <div className="absolute inset-0" style={{ clipPath: "url(#activite2Shape)" }}>
+                  <svg width="0" height="0">
+                    <defs>
+                      <clipPath id="activite2Shape" clipPathUnits="objectBoundingBox">
+                        <motion.path
+                          d="M 0.18,0.05 Q 0.52,0 0.82,0.1 T 0.95,0.28 Q 1,0.52 0.9,0.75 T 0.68,0.93 Q 0.38,0.98 0.16,0.88 T 0.05,0.62 Q 0,0.38 0.18,0.05 Z"
+                          animate={{
+                            d: [
+                              "M 0.18,0.05 Q 0.52,0 0.82,0.1 T 0.95,0.28 Q 1,0.52 0.9,0.75 T 0.68,0.93 Q 0.38,0.98 0.16,0.88 T 0.05,0.62 Q 0,0.38 0.18,0.05 Z",
+                              "M 0.15,0.08 Q 0.48,0.03 0.78,0.13 T 0.92,0.32 Q 0.97,0.55 0.88,0.78 T 0.62,0.95 Q 0.35,0.97 0.15,0.85 T 0.03,0.58 Q 0.02,0.32 0.15,0.08 Z",
+                              "M 0.18,0.05 Q 0.52,0 0.82,0.1 T 0.95,0.28 Q 1,0.52 0.9,0.75 T 0.68,0.93 Q 0.38,0.98 0.16,0.88 T 0.05,0.62 Q 0,0.38 0.18,0.05 Z"
+                            ]
+                          }}
+                          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+                        />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  
+                  <div className="w-full h-full relative">
+                    <Image
+                      src="/activite_new_2.jpg"
+                      alt="Activité 2"
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 via-amber-500/5 to-orange-500/10" />
+                  </div>
+                </div>
+
+                {/* Vector Stroke - Bottom Left */}
+                <motion.svg
+                  className="absolute -bottom-3 left-1/4 w-36 h-12"
+                  viewBox="0 0 160 50"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 1 }}
+                  transition={{ duration: 1.5, delay: 0.8 }}
+                >
+                  <motion.path
+                    d="M 10,25 Q 50,10 90,25 T 150,25"
+                    stroke="url(#activite2Gradient)"
+                    strokeWidth="5"
+                    fill="none"
+                    strokeLinecap="round"
+                    animate={{
+                      d: [
+                        "M 10,25 Q 50,10 90,25 T 150,25",
+                        "M 10,25 Q 50,35 90,25 T 150,25",
+                        "M 10,25 Q 50,10 90,25 T 150,25"
+                      ]
+                    }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                  <defs>
+                    <linearGradient id="activite2Gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#eab308" />
+                      <stop offset="100%" stopColor="#f59e0b" />
+                    </linearGradient>
+                  </defs>
+                </motion.svg>
+
+                {/* Sparkle decoration */}
+                <motion.div
+                  className="absolute bottom-4 right-4 text-3xl"
+                  animate={{
+                    y: [0, -10, 0],
+                    scale: [1, 1.3, 1],
+                  }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  🌟
+                </motion.div>
+              </motion.div>
+            </motion.div>
+
+            {/* Activite New 3 Image */}
+            <motion.div
+              className="relative h-[350px] md:h-[400px]"
+              initial={{ opacity: 0, y: 50, rotateY: 15 }}
+              animate={isInView ? { opacity: 1, y: 0, rotateY: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              {/* Floating background shapes */}
+              <motion.div
+                className="absolute top-1/2 -left-10 w-36 h-36 bg-gradient-to-br from-indigo-300/30 to-violet-500/30 rounded-[70%_30%_40%_60%/50%_50%_60%_40%] blur-2xl"
+                animate={{
+                  scale: [1, 1.25, 1],
+                  rotate: [0, 180, 360],
+                  borderRadius: [
+                    "70% 30% 40% 60% / 50% 50% 60% 40%",
+                    "40% 60% 70% 30% / 60% 40% 50% 50%",
+                    "70% 30% 40% 60% / 50% 50% 60% 40%"
+                  ],
+                }}
+                transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {/* Main Image Container */}
+              <motion.div
+                className="relative w-full h-full"
+                whileHover={{ scale: 1.05, rotate: 3 }}
+                transition={{ duration: 0.4, type: "spring", stiffness: 150 }}
+              >
+                {/* Organic SVG Mask */}
+                <div className="absolute inset-0" style={{ clipPath: "url(#activite3Shape)" }}>
+                  <svg width="0" height="0">
+                    <defs>
+                      <clipPath id="activite3Shape" clipPathUnits="objectBoundingBox">
+                        <motion.path
+                          d="M 0.2,0.07 Q 0.55,0.02 0.85,0.15 T 0.97,0.35 Q 1,0.6 0.88,0.82 T 0.62,0.96 Q 0.32,1 0.13,0.87 T 0.03,0.55 Q 0.01,0.3 0.2,0.07 Z"
+                          animate={{
+                            d: [
+                              "M 0.2,0.07 Q 0.55,0.02 0.85,0.15 T 0.97,0.35 Q 1,0.6 0.88,0.82 T 0.62,0.96 Q 0.32,1 0.13,0.87 T 0.03,0.55 Q 0.01,0.3 0.2,0.07 Z",
+                              "M 0.17,0.1 Q 0.5,0.04 0.82,0.18 T 0.95,0.38 Q 0.98,0.62 0.85,0.85 T 0.58,0.93 Q 0.3,0.97 0.15,0.83 T 0.05,0.52 Q 0.03,0.27 0.17,0.1 Z",
+                              "M 0.2,0.07 Q 0.55,0.02 0.85,0.15 T 0.97,0.35 Q 1,0.6 0.88,0.82 T 0.62,0.96 Q 0.32,1 0.13,0.87 T 0.03,0.55 Q 0.01,0.3 0.2,0.07 Z"
+                            ]
+                          }}
+                          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+                        />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  
+                  <div className="w-full h-full relative">
+                    <Image
+                      src="/activite_new_3.jpg"
+                      alt="Activité 3"
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-violet-500/5 to-purple-500/10" />
+                  </div>
+                </div>
+
+                {/* Vector Stroke - Left Side */}
+                <motion.svg
+                  className="absolute top-1/3 -left-2 w-10 h-32"
+                  viewBox="0 0 40 120"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 1 }}
+                  transition={{ duration: 1.5, delay: 1 }}
+                >
+                  <motion.path
+                    d="M 20,10 Q 30,40 20,70 T 20,110"
+                    stroke="url(#activite3Gradient)"
+                    strokeWidth="4"
+                    fill="none"
+                    strokeLinecap="round"
+                    animate={{
+                      d: [
+                        "M 20,10 Q 30,40 20,70 T 20,110",
+                        "M 20,10 Q 10,40 20,70 T 20,110",
+                        "M 20,10 Q 30,40 20,70 T 20,110"
+                      ]
+                    }}
+                    transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                  <defs>
+                    <linearGradient id="activite3Gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#6366f1" />
+                      <stop offset="100%" stopColor="#8b5cf6" />
+                    </linearGradient>
+                  </defs>
+                </motion.svg>
+
+                {/* Sparkle decoration */}
+                <motion.div
+                  className="absolute top-4 right-4 text-3xl"
+                  animate={{
+                    rotate: [0, -15, 15, 0],
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  ⭐
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   )
