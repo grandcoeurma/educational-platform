@@ -23,6 +23,7 @@ export function ProgramsSection() {
   const [isPaused, setIsPaused] = useState(false)
   const carouselRef = useRef<HTMLDivElement>(null)
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null)
+  const [slidesPerView, setSlidesPerView] = useState(3) // Default to 3 for SSR
 
   const CARD_WIDTH = 450 // Approximate card width + gap
   const TOTAL_CARDS = 8 // Number of program cards
@@ -95,6 +96,22 @@ export function ProgramsSection() {
         clearInterval(autoPlayRef.current)
       }
     }
+  }, [])
+
+  // Handle responsive slides per view
+  useEffect(() => {
+    const handleResize = () => {
+      setSlidesPerView(window.innerWidth < 700 ? 1 : 3)
+    }
+    
+    // Set initial value
+    handleResize()
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize)
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   // Word-by-word animation variants
@@ -584,7 +601,7 @@ export function ProgramsSection() {
 			  nextEl: '.programs-swiper-button-next',
 			  prevEl: '.programs-swiper-button-prev',
 			}}
-			slidesPerView={window.innerWidth < 700 ? 1 : 3}
+			slidesPerView={slidesPerView}
 			spaceBetween={40}
 			centeredSlides={true}
 			mousewheel={true}
