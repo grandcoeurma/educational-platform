@@ -268,3 +268,28 @@ nav button:focus-visible {
     visibility: visible !important;
   }
 }
+
+/* ========================================
+   Custom Swiper Navigation Styles
+   - Hide default Swiper navigation buttons
+   - Use custom styled buttons instead
+   ======================================== */
+.mySwiper .swiper-button-next,
+.mySwiper .swiper-button-prev {
+  display: none !important;
+}
+
+/* Ensure custom navigation buttons are visible and styled */
+.programs-swiper-button-next,
+.programs-swiper-button-prev {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.programs-swiper-button-next:hover,
+.programs-swiper-button-prev:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+

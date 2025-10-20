@@ -580,7 +580,10 @@ export function ProgramsSection() {
           {/* Gradient Overlays for fade effect */}
 		  <Swiper
 			cssMode={true}
-			navigation={true}
+			navigation={{
+			  nextEl: '.programs-swiper-button-next',
+			  prevEl: '.programs-swiper-button-prev',
+			}}
 			slidesPerView={window.innerWidth < 700 ? 1 : 3}
 			spaceBetween={40}
 			centeredSlides={true}
@@ -682,6 +685,29 @@ export function ProgramsSection() {
 
             ))}
       </Swiper>
+
+          {/* Custom Navigation Buttons - Matching Hero Section Style */}
+          <div className="absolute top-1/2 left-4 z-20 transform -translate-y-1/2">
+            <motion.button
+              className="programs-swiper-button-prev p-3 md:p-4 bg-white/20 backdrop-blur-md rounded-full border border-white/30 hover:bg-white/40 transition-all shadow-xl"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label="Previous program"
+            >
+              <ChevronLeft className="w-6 h-6 md:w-7 md:h-7 text-red-600" strokeWidth={2.5} />
+            </motion.button>
+          </div>
+
+          <div className="absolute top-1/2 right-4 z-20 transform -translate-y-1/2">
+            <motion.button
+              className="programs-swiper-button-next p-3 md:p-4 bg-white/20 backdrop-blur-md rounded-full border border-white/30 hover:bg-white/40 transition-all shadow-xl"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label="Next program"
+            >
+              <ChevronRight className="w-6 h-6 md:w-7 md:h-7 text-red-600" strokeWidth={2.5} />
+            </motion.button>
+          </div>
         </div>
       </div>
     </section>
