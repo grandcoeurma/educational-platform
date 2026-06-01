@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className={font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased}>
+      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}>
 
         {/* 🔵 META PIXEL */}
         <Script id="meta-pixel" strategy="afterInteractive">
