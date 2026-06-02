@@ -8,9 +8,9 @@ import Script from "next/script"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Plateforme Éducative - Dédiée aux Personnes en Situation de Handicap",
+  title: "Centre pour enfants autistes et trisomie 21 à Casablanca | Grand Cœur",
   description:
-    "Une plateforme éducative dédiée aux personnes en situation de handicap, reflétant des valeurs de tendresse, d'amour, de soin et d'attention.",
+    "Centre pour enfants autistes et trisomie 21 à Casablanca | Grand Cœur",
   generator: "v0.app",
 }
 
